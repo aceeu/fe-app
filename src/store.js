@@ -10,14 +10,11 @@ const actions_constants = {
 };
 const sort_options = {
     SORT_BY_TIME: 'SORT_BY_TIME',
-    SORT_BY_SUM: 'SORT_BY_SUM'
+    SORT_BY_SUM: 'SORT_BY_SUM',
+    SORT_NATURAL: 'SORT_NATURAL'
 };
 // actions
 
-// export const newFilter = {
-//     type: actions_constants.CHANGE_FILTER,
-//     text: ''
-// }
 export const newRecord = (creator, buyDate, category, buyer, product, sum, whom, note) => {
     return {
         type: actions_constants.ADD_RECORD,
@@ -88,8 +85,10 @@ export const sort = (sort='', action) => {
         case actions_constants.CHANGE_SORT: {
             return action.sort;
         }
-        default: return sort;
+        default: return sort_options.SORT_NATURAL;
     }
 }
 
 export const store = createStore(combineReducers({records, filter, sort}), initialState);
+
+store.dispatch(newRecord('ace', '2018-02-23', 'Продукты', 'Аня', 'Хлеб', 20, '', ''));

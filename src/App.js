@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { store, newRecord } from './store';
+import { store } from './store';
+import { ListViewContainer } from './view/list';
+import PropTypes from 'prop-types';
 
 class App extends Component {
   render() {
@@ -11,12 +13,30 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ListViewContainer/>
       </div>
     );
   }
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe (
+      () => this.forceUpdate()
+    )
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getChildContext() {
+    return  {
+      store
+    }
+  }
+}
+
+App.childContextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 export default App;
