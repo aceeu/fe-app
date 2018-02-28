@@ -1,0 +1,5 @@
+.modal {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 2px red solid; }

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import './list.css'
+import { ShowModal} from './modal';
+import { AddForm } from './addForm';
 
 export class ListViewContainer extends React.Component {
 
@@ -21,7 +24,10 @@ ListViewContainer.contextTypes = {
 
 const ListView = ({records, onEdit}) => {
     const list = records.map((e, i) =>  {
-        const res = <div onClick={e=>onEdit(e.id)} key={i}>
+        const res = <div 
+            onClick={e=>onEdit(e.id)} key={i}
+            className={'viewcontainer'}
+        >
             <div> {e.creator} </div>
             <div> {e.category} </div>    
             <div> {moment(e.date).format('YYYY MM DD')} </div>
@@ -31,9 +37,16 @@ const ListView = ({records, onEdit}) => {
         </div>
         return res;
     });
+
+    const onButton = () => {
+        ShowModal(<AddForm/>);
+    }
     return (
         <React.Fragment>
             {list}
+            <button onClick={e => onButton(e)}>
+                Добавить
+            </button>
         </React.Fragment>
     );
 }
