@@ -9,28 +9,45 @@ const classes = {
 }
 
 export class Modal extends React.Component {
+    onClose = (e) => {
+        this.props.onClose(null);
+    }
+    onAdd = (e) => {
+        this.props.onClose('some data');
+    }
     render() {
         return (
             <div className={classes.modal}>
                 {this.props.children}
                 <button
-                    onClick={this.props.onClose}
-                > Close </button>
+                    onClick={this.onAdd}
+                > Добавить </button>
+
+                <button
+                    onClick={this.onClose}
+                > Отмена </button>
             </div>
         );
     }
 }
 
-export function ShowModal(content) {
-    let element = null;
-    const c =
-        <Modal onClose={e => removeFromBody(element)}>
-            {content}
-        </Modal>
-    element = appendToBody();
-    ReactDOM.render(c, element);
-}
-
 Modal.propsTypes = {
     onClick: PropTypes.func.isRequired
 }
+
+export function defer(contentElement) {
+    const parent = appendToBody();
+    const onClose = () => removeFromBody(parent);
+    const body = function(resolve, reject) {ReactDOM.render(contentElement(resolve), parent)};
+    return new Promise(body).finally(onClose);
+}
+
+export function ShowModal(props, content) {
+    return defer(resolve =>
+      <Modal {...props} show inline onClose={resolve}>
+        {content}
+      </Modal>
+    );
+  }
+
+

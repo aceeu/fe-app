@@ -1,0 +1,9 @@
+.addForm {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    &__item {
+        align-items: stretch;
+    }
+}

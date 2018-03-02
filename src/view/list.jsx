@@ -2,7 +2,7 @@ import * as React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import './list.css'
-import { ShowModal} from './modal';
+import { ShowModal } from './modal';
 import { AddForm } from './addForm';
 
 export class ListViewContainer extends React.Component {
@@ -39,8 +39,18 @@ const ListView = ({records, onEdit}) => {
     });
 
     const onButton = () => {
-        ShowModal(<AddForm/>);
+        let data = {
+            name: '',
+            sum: 0
+        }
+
+        const onData = (datai) => {
+            data = datai;
+        }
+
+        ShowModal({}, <AddForm onData={onData}/>).then((el) => console.log(data));
     }
+
     return (
         <React.Fragment>
             {list}
