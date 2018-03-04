@@ -1,9 +1,12 @@
 import * as React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import './list.css'
 import { ShowModal } from './modal';
 import { AddForm } from './addForm';
+import { store, newRecord } from '../store';
+import moment from 'moment';
+import { DateFormat } from '../define';
+import { Grid } from '../controls/grid';
 
 export class ListViewContainer extends React.Component {
 
@@ -22,38 +25,67 @@ ListViewContainer.contextTypes = {
     store: PropTypes.object
 }
 
+// const ListView = ({records, onEdit}) => {
+//     const list = records.map((e, i) =>  {
+//         const res = <div 
+//             onClick={e=>onEdit(e.id)} key={i}
+//             className={'viewcontainer'}
+//         >
+//             <div> {i} </div>
+//             <div> {moment(e.created).format(DateFormat)} </div>
+//             <div> {moment(e.edited).format(DateFormat)} </div>
+//             <div> {e.creator} </div>
+//             <div> {e.buyer}</div>
+//             <div> {e.category} </div>    
+//             <div> {e.buyDate} </div>
+//             <div> {e.product}</div>
+//             <div> {e.sum}</div>
+//             <div> {e.note}</div>
+//         </div>
+//         return res;
+//     });
+
 const ListView = ({records, onEdit}) => {
-    const list = records.map((e, i) =>  {
-        const res = <div 
-            onClick={e=>onEdit(e.id)} key={i}
-            className={'viewcontainer'}
-        >
-            <div> {e.creator} </div>
-            <div> {e.category} </div>    
-            <div> {moment(e.date).format('YYYY MM DD')} </div>
-            <div> {e.buyer}</div>
-            <div> {e.product}</div>
-            <div> {e.sum}</div>
-        </div>
-        return res;
-    });
+    const gridProps = {
+        headers: [
+            {label: '#', width: 10},
+            {label: 'в/создания', width: 100},
+            {label: 'в/изменения', width: 100},
+            {label: 'Кто занес', width: 100},
+            {label: 'Покупатель', width: 100},
+            {label: 'Категория', width: 100},
+            {label: 'Дата покупки', width: 100},
+            {label: 'Название', width: 130},
+            {label: 'Сумма', width: 80},
+            {label: 'Примечание', width: 150}
+        ],
+        list: records.map((e, i) => {
+            return [i,
+                moment(e.created).format(DateFormat),
+                moment(e.edited).format(DateFormat),
+                e.creator,
+                e.buyer,
+                e.category,
+                e.buyDate,
+                e.product,
+                e.sum,
+                e.note
+            ]
+        }),
+        onItemClick: (i) => {console.log(i), onEdit(records[i]);}
+    }
 
     const onButton = () => {
-        let data = {
-            name: '',
-            sum: 0
-        }
-
-        const onData = (datai) => {
-            data = datai;
-        }
-
-        ShowModal({}, <AddForm onData={onData}/>).then((el) => console.log(data));
+        ShowModal({}, <AddForm />)
+            .then((data) => {
+                if (data)
+                    store.dispatch(newRecord(data));
+            });
     }
 
     return (
         <React.Fragment>
-            {list}
+            <Grid {...gridProps}/>
             <button onClick={e => onButton(e)}>
                 Добавить
             </button>

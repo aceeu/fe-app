@@ -26,3 +26,20 @@
       opacity: .5;
     }
   }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    &--header {
+      display: flex;
+      flex-direction: row;
+      &--item {
+        background-color: goldenrod;
+      }
+    }
+    &--item {
+      display: flex;
+      flex-direction: row;
+      background-color: lightblue;
+    }
+  }

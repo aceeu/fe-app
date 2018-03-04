@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { KeyCodes } from '../common/keycodes';
-import './input.css';
+import './controls.css';
 import { cn } from '../common/classnames';
 
 export const classes = {

@@ -5,27 +5,44 @@ import PropTypes from 'prop-types';
 import {removeFromBody, appendToBody} from './dom'
 
 const classes = {
-    modal: 'modal'
+    modal: 'modal',
+    popover: 'popover',
+    buttons: 'buttons'
 }
 
 export class Modal extends React.Component {
+    
+    data = {a: 1};
+
     onClose = (e) => {
         this.props.onClose(null);
     }
     onAdd = (e) => {
-        this.props.onClose('some data');
+        console.log(this.data);
+        this.props.onClose(this.data);
+    }
+    onData = data => {
+        this.data = data;
     }
     render() {
+        let this_ = this;
+        const clonedChildren = React.Children.map(this.props.children, (child) => {
+            return React.cloneElement(child, {onData: this.onData.bind(this_)});
+        })
         return (
-            <div className={classes.modal}>
-                {this.props.children}
-                <button
-                    onClick={this.onAdd}
-                > Добавить </button>
+            <div className={classes.popover}>
+                <div className={classes.modal}>
+                    {clonedChildren}
+                    <div className={classes.buttons}>
+                        <button
+                            onClick={this.onAdd}
+                        > Добавить </button>
 
-                <button
-                    onClick={this.onClose}
-                > Отмена </button>
+                        <button
+                            onClick={this.onClose}
+                        > Отмена </button>
+                    </div>
+                </div>
             </div>
         );
     }

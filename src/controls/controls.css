@@ -17,3 +17,16 @@
   .textinput:disabled {
     background-color: 'gray';
     opacity: .5; }
+
+.grid {
+  display: flex;
+  flex-direction: column; }
+  .grid--header {
+    display: flex;
+    flex-direction: row; }
+    .grid--header--item {
+      background-color: goldenrod; }
+  .grid--item {
+    display: flex;
+    flex-direction: row;
+    background-color: lightblue; }

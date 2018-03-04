@@ -15,14 +15,27 @@ const sort_options = {
 };
 // actions
 
-export const newRecord = (creator, buyDate, category, buyer, product, sum, whom, note) => {
+const newRecordTemplate = {
+    id: '%id',
+    created: moment().unix()*1000,
+    edited: moment().unix()*1000,
+    creator: '%creator',
+    buyer: '%buyer',
+    category: '%category',
+    buyDate: '%buyDate',
+    product: '%product',
+    sum: NaN,
+    whom: '%whom',
+    note: '%note'
+}
+
+export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom, note}) => {
     return {
         type: actions_constants.ADD_RECORD,
-        id: '',
-        creator,
-        buyDate,
-        time: moment().milliseconds(), // newrecord created time
+        ...newRecordTemplate,
+        id: '$id',
         category,
+        buyDate,
         buyer,
         product,
         sum,
@@ -42,19 +55,10 @@ const initialState = {
 // reducers
 
 export const record = (record, action) => {
+    const {type, ...actionData} = action;
     switch(action.type) {
         case actions_constants.ADD_RECORD: {
-            return {
-                id: action.id,
-                creator: action.creator,
-                date: action.date,
-                category: action.category,
-                buyer: action.buyer,
-                product: action.product,
-                sum: action.sum,
-                whom: action.whom,
-                note: action.note
-            }
+            return {...actionData}
         }
         default: return record;
     }
@@ -89,6 +93,15 @@ export const sort = (sort='', action) => {
     }
 }
 
-export const store = createStore(combineReducers({records, filter, sort}), initialState);
+export const store = createStore(combineReducers({records, filter, sort}), [initialState]);
 
-store.dispatch(newRecord('ace', '2018-02-23', 'Продукты', 'Аня', 'Хлеб', 20, '', ''));
+store.dispatch(newRecord({
+    creator: 'ace',
+    buyDate: '2018-02-23',
+    category: 'Продукты',
+    buyer: 'Аня',
+    product: 'Хлеб',
+    sum: 20,
+    whom: 'Лизе',
+    note: ''
+}));
