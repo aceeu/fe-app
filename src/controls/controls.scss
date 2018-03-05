@@ -34,12 +34,11 @@
       display: flex;
       flex-direction: row;
       &--item {
-        background-color: goldenrod;
+        background-color: olive;
       }
     }
     &--item {
       display: flex;
       flex-direction: row;
-      background-color: lightblue;
     }
   }

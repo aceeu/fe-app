@@ -30,7 +30,7 @@ export class Grid extends React.Component {
                 row.map((rowItem, i) => {
                     return (
                         <div
-                            onClick={e => this.props.onItemClick(i)}
+                            onClick={e => this.props.onItemClick(row)}
                             style={{width: this.props.headers[i].width}}
                         > {rowItem}</div>
                     );
