@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { AddForm } from './addForm';
-import { store, newRecord } from '../store';
+import { newRecord } from '../store';
 import { ShowModal } from './modal';
+import { PropTypes } from 'prop-types';
 
-export const ActionsSection = (props) => {
+export class ActionsSection extends React.Component {
 
-    const onButton = () => {
+
+    onButton = () => {
+        const {store} = this.context;
         ShowModal({}, <AddForm />)
             .then((data) => {
                 if (data)
@@ -13,11 +16,17 @@ export const ActionsSection = (props) => {
             });
     }
 
-    return (
-        <div className={props.className}>
-            <button onClick={e => onButton(e)}>
+    render () {
+        return (
+        <div className={this.props.className}>
+            <button onClick={this.onButton}>
                 Добавить
             </button>
         </div>
-    );
+        );
+    }
+}
+
+ActionsSection.contextTypes = {
+    store: PropTypes.object
 }
