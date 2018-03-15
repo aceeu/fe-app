@@ -12,17 +12,22 @@ const classes = {
 
 export class Modal extends React.Component {
     
-    data = {a: 1};
+    data = null;
+    isCorrect = false;
 
     onClose = (e) => {
         this.props.onClose(null);
     }
     onAdd = (e) => {
         console.log(this.data);
-        this.props.onClose(this.data);
+        if (this.isCorrect)
+            this.props.onClose(this.data);
+        else
+            alert('invalid data');
     }
-    onData = data => {
+    onData = (data, isCorrect) => {
         this.data = data;
+        this.isCorrect = isCorrect;
     }
     render() {
         let this_ = this;

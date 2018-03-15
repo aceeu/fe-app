@@ -1,11 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import './controls.css';
+import { cn } from '../common/classnames';
+
+export const classes = {
+    negative: 'textinput--negative'
+  };
 
 export const Select = ({options, ...props}) => {
     const ops = options.map((o, i) => <option key={i}>{o}</option>)
     return (
         <select
             onChange={e => props.onSelect(e.target.value)}
+            className={cn(props.negative && classes.negative)}
             {...props}
         >
             {ops}
@@ -15,5 +22,6 @@ export const Select = ({options, ...props}) => {
 
 Select.propTypes = {
     options: PropTypes.array.isRequired,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired,
+    negative: PropTypes.bool
 }

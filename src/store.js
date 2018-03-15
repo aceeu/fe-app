@@ -93,7 +93,7 @@ export const sort = (sort='', action) => {
     }
 }
 
-export const store = createStore(combineReducers({records, filter, sort}), [initialState]);
+export const store = createStore(combineReducers({records, filter, sort}), initialState);
 
 store.dispatch(newRecord({
     creator: 'ace',

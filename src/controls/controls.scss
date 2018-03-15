@@ -5,15 +5,15 @@
     min-height: 10px;
     padding: 3px;
     box-sizing: border-box;
-    background-color: 'yellow';
+    background-color: yellow;
   
     &--multiline {
       resize: vertical;
     }
   
     &--negative {
-      border-color: 'red';
-      outline: 'red' auto 1px;
+      border-color: red;
+      outline: red auto 1px;
     }
   
     &--nowrap {
@@ -22,7 +22,7 @@
     }
   
     &:disabled {
-      background-color: 'gray';
+      background-color: gray;
       opacity: .5;
     }
   }

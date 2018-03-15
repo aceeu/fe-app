@@ -117,7 +117,7 @@ function getChar(event) {
     return String.fromCharCode(event.keyCode)
   }
 
-  if (event.which != 0 && event.charCode != 0) { // все кроме IE
+  if (event.which !== 0 && event.charCode !== 0) { // все кроме IE
     if (event.which < 32) return null; // спец. символ
     return String.fromCharCode(event.which); // остальные
   }
@@ -125,12 +125,12 @@ function getChar(event) {
   return null; // спец. символ
 }
 
-const NUMERIC_CHARACTERS_REGEX = /^[Ee0-9\+\-\.\,]$/;
+const NUMERIC_CHARACTERS_REGEX = /^[Ee0-9\\+\-\\.\\,]$/;
 
 export class NumericInput extends React.Component {
   onKeyPress = (e) => {
     const char = getChar(e);
-    if (NUMERIC_CHARACTERS_REGEX.test(char) == false)
+    if (NUMERIC_CHARACTERS_REGEX.test(char) === false)
       e.preventDefault();
   }
   render() {

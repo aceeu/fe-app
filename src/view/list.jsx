@@ -53,7 +53,7 @@ const ListView = ({records, onEdit}) => {
                 e.note
             ]
         }),
-        onItemClick: (row) => {console.log(row), onEdit(row);}
+        onItemClick: (row) => {console.log(row); onEdit(row);}
     }
     return (
         <Grid {...gridProps}/>

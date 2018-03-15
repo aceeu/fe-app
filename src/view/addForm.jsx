@@ -14,23 +14,44 @@ export class AddForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            creator: 'Неизвестно',
+            // creator: 'Неизвестно',
             buyDate: moment(),
             category: '',
             buyer: '',
             product: '',
             sum: 0,
             whom: '',
-            note: ''
+            note: '',
+            invalidStatusSum: true // ошибка в заполнении полей
         }
     }
 
     onEnter = e => {}
     handleChange = e => this.setState({buyDate: e})
-    componentDidUpdate() {
-        let res = {...this.state, buyDate: this.state.buyDate.format(DateFormat)};
-        this.props.onData && this.props.onData(res);
+    isCorrectData() {
+        return !this.state.invalidStatusSum
+            && this.state.buyer.length !== 0
+            && this.state.category.length !== 0
+            && this.state.product.length !== 0;
     }
+    componentDidUpdate() {
+        let res = {
+            buyDate: this.state.buyDate.format(DateFormat),
+            category: this.state.category,
+            buyer: this.state.buyer,
+            product: this.state.product,
+            sum: this.state.sum,
+            whom: this.state.whom,
+            note: this.state.note
+        };
+
+        this.props.onData && this.props.onData(res, this.isCorrectData());
+    }
+
+    isNaNSum (value) {
+        return Number.isNaN(Number.parseFloat(value));
+    }
+
     render() {
         return (
             <div className={'addForm'}>
@@ -39,6 +60,7 @@ export class AddForm extends React.Component {
                     options={BUYERS}
                     autoFocus
                     onSelect={e => this.setState({buyer: e})}
+                    negative={this.state.buyer.length === 0}
                 />
                 <label>Дата покупки</label>
                 <DatePicker
@@ -50,6 +72,7 @@ export class AddForm extends React.Component {
                 <Select
                     options={CATEGORIES}
                     onSelect={e => this.setState({category: e})}
+                    negative={this.state.category.length === 0}
                 />
                 <label>Название</label>
                 <TextInput 
@@ -57,13 +80,17 @@ export class AddForm extends React.Component {
                     onBlur={e => {
                         this.setState({product: e.currentTarget.value});
                     }}
+                    negative={this.state.product.length < 3}
                 ></TextInput>
                 <label>Сумма расхода</label>
                 <NumericInput 
-                    onEnter={this.onEnter}
                     onBlur={e => {
-                        this.setState({sum: +e.currentTarget.value});
+                        let value = e.currentTarget.value;
+                        value = value.replace(',', '.');
+                        const invalidStatusSum = this.isNaNSum(value);
+                        this.setState({invalidStatusSum, sum: Number.parseFloat(value)});
                     }}
+                    negative={this.state.invalid_sum || this.state.sum === 0}
                 />
                 <label>Кому покупка</label>
                 <Select

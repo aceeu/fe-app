@@ -13,8 +13,11 @@ export class Grid extends React.Component {
     renderHeader() {
         return (
             <div className={classes.gridHeader}>{
-                this.props.headers.map(header => {
-                    return (<div className={classes.gridHeaderItem}
+                this.props.headers.map((header, i) => {
+                    return (
+                    <div 
+                        key={i}
+                        className={classes.gridHeaderItem}
                         style={{width: header.width}}
                     >
                         {header.label}
@@ -26,10 +29,13 @@ export class Grid extends React.Component {
     }
     renderRow(row) {
         return (
-            <div className={classes.gridItem}> {
+            <div
+                key={row} 
+                className={classes.gridItem}> {
                 row.map((rowItem, i) => {
                     return (
                         <div
+                            key={i}
                             onClick={e => this.props.onItemClick(row)}
                             style={{width: this.props.headers[i].width}}
                         > {rowItem}</div>
