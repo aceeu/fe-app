@@ -2,8 +2,11 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    width: 180px;
+    padding: 2em;
     &__item {
         align-items: stretch;
     }
+}
+.addForm > label {
+    padding-top: 10px;
 }

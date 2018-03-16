@@ -22,8 +22,6 @@ export class Modal extends React.Component {
         console.log(this.data);
         if (this.isCorrect)
             this.props.onClose(this.data);
-        else
-            alert('invalid data');
     }
     onData = (data, isCorrect) => {
         this.data = data;

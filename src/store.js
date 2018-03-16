@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import moment from 'moment';
+import { loggedUser } from './App'
 
 const actions_constants = {
     ADD_RECORD: 'ADD_RECORD',
@@ -19,7 +20,7 @@ const newRecordTemplate = {
     id: '%id',
     created: moment().unix()*1000,
     edited: moment().unix()*1000,
-    creator: '%creator',
+    creator: loggedUser,
     buyer: '%buyer',
     category: '%category',
     buyDate: '%buyDate',

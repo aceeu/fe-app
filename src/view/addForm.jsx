@@ -7,6 +7,7 @@ import { Select } from '../controls/select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import { loggedUser } from '../App';
 
 
 export class AddForm extends React.Component {
@@ -55,6 +56,7 @@ export class AddForm extends React.Component {
     render() {
         return (
             <div className={'addForm'}>
+                <label>{loggedUser}</label>
                 <label>Кто потратил</label>
                 <Select
                     options={BUYERS}
@@ -63,11 +65,21 @@ export class AddForm extends React.Component {
                     negative={this.state.buyer.length === 0}
                 />
                 <label>Дата покупки</label>
+                <div
+                    style={{display: 'flex', flexDirection: 'row'}}
+                >
                 <DatePicker
                     selected={this.state.buyDate}
                     onChange={this.handleChange}
                     dateFormat={DateFormat}
                 />
+                <button onClick={() => {
+                    const yesterday = this.state.buyDate.subtract(1, 'days');
+                    this.setState({buyDate: yesterday});
+                }}>
+                    -1 день
+                </button>
+                </div>
                 <label>Категория</label>
                 <Select
                     options={CATEGORIES}
@@ -90,7 +102,7 @@ export class AddForm extends React.Component {
                         const invalidStatusSum = this.isNaNSum(value);
                         this.setState({invalidStatusSum, sum: Number.parseFloat(value)});
                     }}
-                    negative={this.state.invalid_sum || this.state.sum === 0}
+                    negative={this.state.invalidStatusSum || this.state.sum === 0}
                 />
                 <label>Кому покупка</label>
                 <Select

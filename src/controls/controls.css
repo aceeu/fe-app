@@ -3,9 +3,7 @@
   border-radius: 1;
   min-width: 30px;
   min-height: 10px;
-  padding: 3px;
-  box-sizing: border-box;
-  background-color: yellow; }
+  padding: 3px; }
   .textinput--multiline {
     resize: vertical; }
   .textinput--negative {
