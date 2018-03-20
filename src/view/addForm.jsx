@@ -89,21 +89,27 @@ export class AddForm extends React.Component {
                 <label>Название</label>
                 <TextInput 
                     onEnter={this.onEnter} 
-                    onBlur={e => {
+                    onChange={e => {
                         this.setState({product: e.currentTarget.value});
                     }}
                     negative={this.state.product.length < 3}
                 ></TextInput>
                 <label>Сумма расхода</label>
-                <NumericInput 
-                    onBlur={e => {
-                        let value = e.currentTarget.value;
-                        value = value.replace(',', '.');
-                        const invalidStatusSum = this.isNaNSum(value);
-                        this.setState({invalidStatusSum, sum: Number.parseFloat(value)});
-                    }}
-                    negative={this.state.invalidStatusSum || this.state.sum === 0}
-                />
+                <div
+                    style={{display: 'flex', flexDirection: 'row'}}
+                >
+                    <NumericInput 
+                        style={{width: '160px'}}
+                        onChange={e => {
+                            let value = e.currentTarget.value;
+                            value = value.replace(',', '.');
+                            const invalidStatusSum = this.isNaNSum(value);
+                            this.setState({invalidStatusSum, sum: Number.parseFloat(value)});                        
+                        }}
+                        negative={this.state.invalidStatusSum || this.state.sum === 0}
+                    />
+                    <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {this.state.sum} </div>
+                </div>
                 <label>Кому покупка</label>
                 <Select
                     options={TARGET}
