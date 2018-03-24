@@ -30,25 +30,25 @@ const ListView = ({records, onEdit}) => {
     const gridProps = {
         headers: [
             {label: '#', width: 10},
-            {label: 'в/создания', width: 100},
-            {label: 'в/изменения', width: 100},
-            {label: 'Кто занес', width: 100},
-            {label: 'Покупатель', width: 100},
-            {label: 'Категория', width: 100},
+            // {label: 'в/создания', width: 100},
+            // {label: 'в/изменения', width: 100},
             {label: 'Дата покупки', width: 100},
             {label: 'Название', width: 130},
+            {label: 'Категория', width: 100},
+            {label: 'Кто занес', width: 100},
+            {label: 'Покупатель', width: 100},
             {label: 'Сумма', width: 80},
             {label: 'Примечание', width: 150}
         ],
         list: records.map((e, i) => {
             return [i,
-                moment(e.created).format(DateFormat),
-                moment(e.edited).format(DateFormat),
-                e.creator,
-                e.buyer,
-                e.category,
+                // moment(e.created).format(DateFormat),
+                // moment(e.edited).format(DateFormat),
                 e.buyDate,
                 e.product,
+                e.category,
+                e.creator,
+                e.buyer,
                 e.sum,
                 e.note
             ]
