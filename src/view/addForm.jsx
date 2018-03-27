@@ -7,7 +7,7 @@ import { Select } from '../controls/select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import { loggedUser } from '../App';
+import { loggedUser } from './actions-section';
 
 
 export class AddForm extends React.Component {

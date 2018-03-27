@@ -1,9 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import moment from 'moment';
-import { loggedUser } from './App'
+import { loggedUser } from './view/actions-section';
 
 const actions_constants = {
     ADD_RECORD: 'ADD_RECORD',
+    FETCH_RECORDS: 'FETCH_RECORDS',
     DELETE_RECORD: 'DELETE_RECORD',
     EDIT_RECORD: 'EDIT_RECORD',
     CHANGE_SORT: 'CHANGE_SORT',
@@ -72,9 +73,13 @@ export const records = (records = [], action) => {
                 record({}, action)
             ]
         }
+        case actions_constants.FETCH_RECORDS: {
+            return records;
+        }
         default: return records;
     }
 }
+
 
 export const filter = (text='', action) => {
     switch(action.type) {

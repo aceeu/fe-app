@@ -5,8 +5,6 @@ import { store } from './store';
 import PropTypes from 'prop-types';
 import { TopContainer } from './view/top-container';
 
-export const loggedUser = 'loggedUser'; // потом надо заменить на пользователя который был залогинен
-
 class App extends Component {
   render() {
     return (

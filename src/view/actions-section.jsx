@@ -3,13 +3,31 @@ import { AddForm } from './addForm';
 import { newRecord } from '../store';
 import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
-import { MakeGetRequest } from '../common/request';
-import { Login } from './login';
+import { LoginPanel } from './login-panel';
+import { get } from '../communicate';
+
+export let loggedUser = undefined; // потом надо заменить на пользователя который был залогинен
+
 
 export class ActionsSection extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state={
+            user: loggedUser
+        }
+    }
 
-    onButton = () => {
+    componentDidMount () {
+        const res = get(`/user`).then(res => {
+            if (res.name) {
+                loggedUser = res.name;
+                this.setState({user: res.name});
+            }
+        });
+    }
+
+    onButtonAdd = () => {
         const {store} = this.context;
         ShowModal({}, <AddForm />)
             .then((data) => {
@@ -18,22 +36,27 @@ export class ActionsSection extends React.Component {
             });
     }
 
-    onLoginButton = async() => {
-        let name_pass = await ShowModal({}, <Login />);
-        MakeGetRequest(`/auth/${name_pass.user}/pass/${name_pass.password}`, {}, (res) => {
-            window.alert(res);
-        });
+    onLogin = (user) => {
+        loggedUser  = user;
+        this.setState({user});    
+    }
+
+    renderButtonAdd() {
+        return (
+            <button onClick={this.onButtonAdd}>
+                Добавить
+            </button>
+        );
     }
 
     render () {
         return (
         <div className={this.props.className}>
-            <button onClick={this.onButton}>
-                Добавить
-            </button>
-            <button onClick={this.onLoginButton}>
-                Login
-            </button>
+            {this.state.user ? this.renderButtonAdd() : null}
+            <LoginPanel
+                user={this.state.user}
+                onLogin={this.onLogin}
+            />
         </div>
         );
     }
