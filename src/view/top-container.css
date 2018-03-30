@@ -7,7 +7,8 @@
 
 .action-section {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  justify-content: flex-end; }
 
 .filter-section {
   display: flex;

@@ -11,26 +11,24 @@ export class Login extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        this.props.onData && this.props.onData(this.state, true);
-    }
-
     render() {
         return (
             <div>
                 <label>Имя</label>
                 <TextInput 
-                    onEnter={this.onEnter} 
-                    onChange={e => {
-                        this.setState({user: e.currentTarget.value});
+                    onBlur={
+                        e => this.setState({user: e.currentTarget.value})
+                    }
+                    onEnter={e => {
+                        this.setState({user: e}, () => {this.props.onData(this.state)});
                     }}
                     negative={this.state.user.length < 3}
                 ></TextInput>
                 <label>Пароль</label>
                 <TextInput 
-                    onEnter={this.onEnter} 
-                    onChange={e => {
-                        this.setState({password: e.currentTarget.value});
+                    onBlur={e => this.setState({user: e.currentTarget.value})}
+                    onEnter={e => {
+                        this.setState({password: e}, () => {this.props.onData(this.state)});
                     }}
                 ></TextInput>
             </div>

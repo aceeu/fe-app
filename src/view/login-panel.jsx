@@ -2,15 +2,9 @@ import * as React from 'react';
 import { Login } from './login';
 import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
-import { get } from '../communicate';
+import { get, post } from '../communicate';
 
 export class LoginPanel extends React.Component {
-
-    onLoginButton = async() => {
-        let name_pass = await ShowModal({}, <Login />);
-        const res = await get(`/auth/${name_pass.user}/pass/${name_pass.password}`);
-        this.props.onLogin(res.name);
-    }
 
     onLogoutButton = async() => {
         const res = await get(`/logout`);
@@ -37,10 +31,15 @@ export class LoginPanel extends React.Component {
         )
     }
 
+    async onLogin(data) {
+        const res = await post(`/auth`, data);
+        this.props.onLogin(res.name);
+    }
+
     render() {
         return (
             <div>
-                {this.props.user ? this.renderLogoutButton() : this.renderButton()}
+                {this.props.user ? this.renderLogoutButton() : <Login onData={e => this.onLogin(e)}/>}
             </div>
         );
     }
