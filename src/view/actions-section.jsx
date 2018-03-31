@@ -4,7 +4,7 @@ import { newRecord } from '../store';
 import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
 import { LoginPanel } from './login-panel';
-import { get } from '../communicate';
+import { get, post } from '../communicate';
 
 export let loggedUser = undefined; // потом надо заменить на пользователя который был залогинен
 
@@ -27,13 +27,15 @@ export class ActionsSection extends React.Component {
         });
     }
 
-    onButtonAdd = () => {
+    onButtonAdd = async() => {
         const {store} = this.context;
-        ShowModal({}, <AddForm />)
-            .then((data) => {
-                if (data)
-                    store.dispatch(newRecord(data));
-            });
+        let data = await ShowModal({}, <AddForm />);
+        if (data) {
+            // send data to the server
+            const res = await post('/adddata', data);
+            if (res.res)
+                store.dispatch(newRecord(data));
+        }
     }
 
     onLogin = (user) => {

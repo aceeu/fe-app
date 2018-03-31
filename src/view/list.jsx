@@ -12,7 +12,6 @@ export class ListViewContainer extends React.Component {
     }
 
     render () {
-        console.log(this.context);
         const {store} = this.context;
         return (
             <div className={'viewcontainer'}>
@@ -42,8 +41,6 @@ const ListView = ({records, onEdit}) => {
         ],
         list: records.map((e, i) => {
             return [i,
-                // moment(e.created).format(DateFormat),
-                // moment(e.edited).format(DateFormat),
                 e.buyDate,
                 e.product,
                 e.category,

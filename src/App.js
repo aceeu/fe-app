@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { store } from './store';
+import { store,  actions_constants } from './store';
 import PropTypes from 'prop-types';
 import { TopContainer } from './view/top-container';
+import { get } from './communicate';
 
 class App extends Component {
   render() {
@@ -22,6 +23,14 @@ class App extends Component {
     this.unsubscribe = store.subscribe (
       () => this.forceUpdate()
     )
+    const fetchdata = async () => {
+      let data = await get('/data');
+      store.dispatch({
+        type: actions_constants.FETCH_RECORDS,
+        data
+      });
+    }
+    fetchdata();
   }
 
   componentWillUnmount() {

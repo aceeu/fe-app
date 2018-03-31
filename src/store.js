@@ -2,7 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import moment from 'moment';
 import { loggedUser } from './view/actions-section';
 
-const actions_constants = {
+export const actions_constants = {
     ADD_RECORD: 'ADD_RECORD',
     FETCH_RECORDS: 'FETCH_RECORDS',
     DELETE_RECORD: 'DELETE_RECORD',
@@ -74,7 +74,7 @@ export const records = (records = [], action) => {
             ]
         }
         case actions_constants.FETCH_RECORDS: {
-            return records;
+            return action.data;
         }
         default: return records;
     }
@@ -100,14 +100,3 @@ export const sort = (sort='', action) => {
 }
 
 export const store = createStore(combineReducers({records, filter, sort}), initialState);
-
-store.dispatch(newRecord({
-    creator: 'ace',
-    buyDate: '2018-02-23',
-    category: 'Продукты',
-    buyer: 'Аня',
-    product: 'Хлеб',
-    sum: 20,
-    whom: 'Лизе',
-    note: ''
-}));
