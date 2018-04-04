@@ -9,7 +9,7 @@ export class LoginPanel extends React.Component {
     onLogoutButton = async() => {
         const res = await get(`/logout`);
         if (res.res === true)
-            this.props.onLogin(undefined);
+            this.props.onLogin('');
     }
 
     renderButton() {

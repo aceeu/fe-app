@@ -23,14 +23,6 @@ class App extends Component {
     this.unsubscribe = store.subscribe (
       () => this.forceUpdate()
     )
-    const fetchdata = async () => {
-      let data = await get('/data');
-      store.dispatch({
-        type: actions_constants.FETCH_RECORDS,
-        data
-      });
-    }
-    fetchdata();
   }
 
   componentWillUnmount() {

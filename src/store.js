@@ -1,6 +1,6 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { get } from './communicate';
 import moment from 'moment';
-import { loggedUser } from './view/actions-section';
 
 export const actions_constants = {
     ADD_RECORD: 'ADD_RECORD',
@@ -8,7 +8,8 @@ export const actions_constants = {
     DELETE_RECORD: 'DELETE_RECORD',
     EDIT_RECORD: 'EDIT_RECORD',
     CHANGE_SORT: 'CHANGE_SORT',
-    CHANGE_FILTER: 'CHANGE_FILTER'
+    CHANGE_FILTER: 'CHANGE_FILTER',
+    UPDATE_LOGIN: 'UPDATE_LOGIN'
 };
 const sort_options = {
     SORT_BY_TIME: 'SORT_BY_TIME',
@@ -21,7 +22,7 @@ const newRecordTemplate = {
     id: '%id',
     created: moment().unix()*1000,
     edited: moment().unix()*1000,
-    creator: loggedUser,
+    creator: '%user',
     buyer: '%buyer',
     category: '%category',
     buyDate: '%buyDate',
@@ -48,10 +49,13 @@ export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom
 
 export const newSort = (sort = sort_options.SORT_BY_TIME) => ({type: actions_constants.CHANGE_SORT, sort})
 
+export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN, user: userName});
+
 const initialState = {
     records: [],
     filter: '', // dateFilter
-    sort: ''
+    sort: '',
+    user: '' // login user
 }
 
 // reducers
@@ -76,6 +80,11 @@ export const records = (records = [], action) => {
         case actions_constants.FETCH_RECORDS: {
             return action.data;
         }
+        case actions_constants.UPDATE_LOGIN: {
+            if(action.user)
+                return records;
+            else return [];
+        }
         default: return records;
     }
 }
@@ -99,4 +108,41 @@ export const sort = (sort='', action) => {
     }
 }
 
-export const store = createStore(combineReducers({records, filter, sort}), initialState);
+export const user = (user='', action) => {
+    switch(action.type) {
+        case actions_constants.UPDATE_LOGIN: {
+            return action.user;
+        }
+        default: return user;
+    }
+}
+
+const loginDetector = store => next => action => {
+    next(action);
+    if(action.type == actions_constants.UPDATE_LOGIN) {
+        if (store.getState().user)
+            fetchData();
+        else
+            store.dispatch({type: actions_constants.FETCH_RECORDS, data: []})
+    }
+}
+
+export const store = applyMiddleware(loginDetector)(createStore)(combineReducers({records, filter, sort, user}), initialState);
+
+async function fetchData () {
+    let data = await get('/data');
+    if (data.res !== false) {
+      store.dispatch({
+        type: actions_constants.FETCH_RECORDS,
+        data
+      });  
+    }
+  }
+
+
+(async () => {
+    const res = get(`/user`).then(res => {
+        if (res.name)
+            store.dispatch(updateLogin(res.name));
+    });
+})();

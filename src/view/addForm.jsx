@@ -7,7 +7,6 @@ import { Select } from '../controls/select';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
-import { loggedUser } from './actions-section';
 
 
 export class AddForm extends React.Component {
@@ -15,7 +14,7 @@ export class AddForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // creator: 'Неизвестно',
+            creator: props.user,
             buyDate: moment(),
             category: '',
             buyer: '',
@@ -56,7 +55,7 @@ export class AddForm extends React.Component {
     render() {
         return (
             <div className={'addForm'}>
-                <label>{loggedUser}</label>
+                <label>{this.props.user}</label>
                 <label>Кто потратил</label>
                 <Select
                     options={BUYERS}
@@ -124,5 +123,6 @@ export class AddForm extends React.Component {
 }
 
 AddForm.propsTypes = {
-    onData: PropTypes.func
+    onData: PropTypes.func,
+    user: PropTypes.string.isRequired
 }
