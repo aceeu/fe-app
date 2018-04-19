@@ -1,18 +1,35 @@
 import * as React from 'react';
 import { TextInput, NumericInput } from '../controls/input';
 import PropTypes from 'prop-types';
+import { get } from '../communicate';
 
 export class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: undefined,
             user: '',
             password: ''
         }
     }
 
-    render() {
+    onEMess = async () => {
+        const token = await get('/authtoken');
+        if(token.res)
+            this.setState({token: token.token});
+    }
+
+    renderEnterMess() {
         return (
+            <div onClick={this.onEMess}>
+                Войти
+            </div>
+        );
+    }
+
+    render() {
+        return this.state.token === undefined ? this.renderEnterMess() :
+            (
             <div>
                 <label>Имя</label>
                 <TextInput 
@@ -30,6 +47,7 @@ export class Login extends React.Component {
                     onEnter={e => {
                         this.setState({password: e}, () => {this.props.onData(this.state)});
                     }}
+                    password
                 ></TextInput>
             </div>
         );

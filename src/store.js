@@ -37,6 +37,7 @@ export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom
         type: actions_constants.ADD_RECORD,
         ...newRecordTemplate,
         id: '$id',
+        creator,
         category,
         buyDate,
         buyer,

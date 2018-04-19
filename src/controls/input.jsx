@@ -82,7 +82,7 @@ export class TextInput extends React.Component {
     return (
       <input
         ref={this.onRef}
-        type='text'
+        type={this.props.password ? 'password' : 'text'}
         {...props}
         onBlur={this.onBlur}
         onKeyDown={this.onKeyDown}
@@ -99,7 +99,8 @@ TextInput.propTypes = {
   onBlur: PropTypes.func,
   defaultSelect: PropTypes.bool,
   enterOnBlur: PropTypes.bool,
-  blurOnCancel: PropTypes.bool
+  blurOnCancel: PropTypes.bool,
+  password: PropTypes.bool
 }
 
 TextInput.defaultProps = {
