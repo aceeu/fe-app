@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { get } from './communicate';
+import { get, post } from './communicate';
 import moment from 'moment';
 
 export const actions_constants = {
@@ -20,8 +20,9 @@ const sort_options = {
 
 const newRecordTemplate = {
     id: '%id',
-    created: moment().unix()*1000,
-    edited: moment().unix()*1000,
+    created: moment(),
+    edited: moment(), // время редактирования
+    editor: '%user', // кто отредактировал
     creator: '%user',
     buyer: '%buyer',
     category: '%category',
@@ -36,7 +37,6 @@ export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom
     return {
         type: actions_constants.ADD_RECORD,
         ...newRecordTemplate,
-        id: '$id',
         creator,
         category,
         buyDate,
@@ -45,6 +45,13 @@ export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom
         sum,
         whom,
         note
+    }
+}
+
+export const editedRecord = (data) => {
+    return {
+        type: actions_constants.EDIT_RECORD,
+        ...data
     }
 }
 
@@ -67,6 +74,9 @@ export const record = (record, action) => {
         case actions_constants.ADD_RECORD: {
             return {...actionData}
         }
+        case actions_constants.EDIT_RECORD: {
+            return (record._id !== actionData._id) ? record : {...actionData}
+        }
         default: return record;
     }
 }
@@ -77,6 +87,9 @@ export const records = (records = [], action) => {
             return [...records,
                 record({}, action)
             ]
+        }
+        case actions_constants.EDIT_RECORD: {
+            return records.map(i => record(i, action));
         }
         case actions_constants.FETCH_RECORDS: {
             return action.data;
@@ -131,12 +144,12 @@ const loginDetector = store => next => action => {
 export const store = applyMiddleware(loginDetector)(createStore)(combineReducers({records, filter, sort, user}), initialState);
 
 async function fetchData () {
-    let data = await get('/data');
+    let data = await post('/data', {period: 3, buyer: 'Женя'});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,
         data
-      });  
+      });
     }
   }
 

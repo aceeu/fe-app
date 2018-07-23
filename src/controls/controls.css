@@ -23,7 +23,9 @@
     display: flex;
     flex-direction: row; }
     .grid--header--item {
-      background-color: olive; }
+      background-color: #aee4fd; }
   .grid--item {
     display: flex;
     flex-direction: row; }
+    .grid--item--odd {
+      background-color: #8bc094; }

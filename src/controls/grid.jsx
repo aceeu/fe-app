@@ -1,12 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import './controls.css'
+import { cn } from '../common/classnames';
 
 const classes = {
     grid: 'grid',
     gridHeader: 'grid--header',
     gridHeaderItem: 'grid--header--item',
-    gridItem: 'grid--item'
+    gridItem: 'grid--item',
+    gridItemOdd: 'grid--item--odd'
 }
 
 export class Grid extends React.Component {
@@ -27,17 +29,20 @@ export class Grid extends React.Component {
             </div>
         )
     }
-    renderRow(row) {
+    renderRow(row, i) {
+        let oddStyle = i % 2 ? undefined : classes.gridItemOdd;
         return (
             <div
-                key={row} 
-                className={classes.gridItem}> {
-                row.map((rowItem, i) => {
+                key={i} 
+                className={cn(classes.gridItem, oddStyle)}> {
+                row.map((rowItem, ri) => {
+                    
                     return (
                         <div
-                            key={i}
-                            onClick={e => this.props.onItemClick(row)}
-                            style={{width: this.props.headers[i].width}}
+                            key={ri}
+                            className={classes.gridItem}
+                            onClick={e => this.props.onItemClick(i)}
+                            style={{width: this.props.headers[ri].width}}
                         > {rowItem}</div>
                     );
                 })}
@@ -47,7 +52,7 @@ export class Grid extends React.Component {
         return (
             <div className={classes.grid}>
                 {this.renderHeader()}
-                {this.props.list.map(row => this.renderRow(row))}
+                {this.props.list.map((row, i) => this.renderRow(row, i))}
             </div>
         );
     }
