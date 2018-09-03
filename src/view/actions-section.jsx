@@ -5,6 +5,7 @@ import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
 import { LoginPanel } from './login-panel';
 import { get, post } from '../communicate';
+import { Button, Intent } from "@blueprintjs/core";
 
 export class ActionsSection extends React.Component {
 
@@ -30,9 +31,7 @@ export class ActionsSection extends React.Component {
 
     renderButtonAdd() {
         return (
-            <button onClick={this.onButtonAdd}>
-                Добавить
-            </button>
+            <Button onClick={this.onButtonAdd} intent={Intent.SUCCESS}>+</Button>
         );
     }
 

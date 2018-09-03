@@ -9,6 +9,7 @@ export const actions_constants = {
     EDIT_RECORD: 'EDIT_RECORD',
     CHANGE_SORT: 'CHANGE_SORT',
     CHANGE_FILTER: 'CHANGE_FILTER',
+    CHANGE_PERIOD: 'CHANGE_PERIOD',
     UPDATE_LOGIN: 'UPDATE_LOGIN'
 };
 const sort_options = {
@@ -16,6 +17,13 @@ const sort_options = {
     SORT_BY_SUM: 'SORT_BY_SUM',
     SORT_NATURAL: 'SORT_NATURAL'
 };
+
+const Period = {
+    lastDay: 1,
+    lastWeek: 2,
+    lastMonth: 3,
+    lastYear: 4
+  };
 // actions
 
 const newRecordTemplate = {
@@ -61,13 +69,13 @@ export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN,
 
 const initialState = {
     records: [],
-    filter: '', // dateFilter
+    period: Period.lastDay,
+    filter: '', // some text filter
     sort: '',
     user: '' // login user
 }
 
 // reducers
-
 export const record = (record, action) => {
     const {type, ...actionData} = action;
     switch(action.type) {
@@ -113,7 +121,16 @@ export const filter = (text='', action) => {
     }
 }
 
-export const sort = (sort='', action) => {
+export const period = (period = Period.lastDay, action) => {
+    switch (action.type) {
+        case actions_constants.CHANGE_PERIOD: {
+            return action.period;
+        }
+        default: return Period.lastDay;
+    }
+}
+
+export const sort = (sort = '', action) => {
     switch(action.type) {
         case actions_constants.CHANGE_SORT: {
             return action.sort;
@@ -135,7 +152,7 @@ const loginDetector = store => next => action => {
     next(action);
     if(action.type == actions_constants.UPDATE_LOGIN) {
         if (store.getState().user)
-            fetchData();
+            fetchData(Period.lastMonth);
         else
             store.dispatch({type: actions_constants.FETCH_RECORDS, data: []})
     }
@@ -143,8 +160,8 @@ const loginDetector = store => next => action => {
 
 export const store = applyMiddleware(loginDetector)(createStore)(combineReducers({records, filter, sort, user}), initialState);
 
-async function fetchData () {
-    let data = await post('/data', {period: 3, buyer: 'Женя'});
+async function fetchData (period, buyer = '') {
+    let data = await post('/data', {period, buyer});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,

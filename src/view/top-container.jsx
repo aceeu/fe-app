@@ -2,7 +2,7 @@ import * as React from 'react';
 import './top-container.css';
 import { ListViewContainer } from './list';
 import { ActionsSection } from './actions-section';
-
+ 
 const classes = {
     topContainer: 'top-container',
     actionSection: 'action-section',

@@ -3,6 +3,7 @@ import { Login } from './login';
 import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
 import { get, post } from '../communicate';
+import { Button, Intent } from "@blueprintjs/core";
 
 function jssha(text) {
     const shaObj = new window.jsSHA("SHA-256", "TEXT");
@@ -20,9 +21,7 @@ export class LoginPanel extends React.Component {
 
     renderButton() {
         return (
-            <button onClick={this.onLoginButton}>
-                Login
-            </button>
+            <Button onClick={this.onLoginButton} intent={Intent.SUCCESS}>Авторизация</Button>
         )
     }
 
@@ -30,9 +29,9 @@ export class LoginPanel extends React.Component {
         return (
             <div>
                 {this.props.user}
-                <button onClick={this.onLogoutButton}>
-                    Logout
-                </button>
+                <Button onClick={this.onLogoutButton} intent={Intent.PRIMARY}>
+                    Выйти
+                </Button>
             </div>
         )
     }
