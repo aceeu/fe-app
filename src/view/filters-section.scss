@@ -1,0 +1,16 @@
+.filters-section {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.3em;
+    &-title {
+        color: black;
+        margin: 0 6px;
+    }
+    &-item {
+        color: green;
+        margin: 0 5px;
+    }
+    &-selected {
+        color: red;
+    }
+}

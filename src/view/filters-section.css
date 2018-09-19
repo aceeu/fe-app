@@ -1,0 +1,12 @@
+.filters-section {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.3em; }
+  .filters-section-title {
+    color: black;
+    margin: 0 6px; }
+  .filters-section-item {
+    color: green;
+    margin: 0 5px; }
+  .filters-section-selected {
+    color: red; }

@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { get, post } from './communicate';
 import moment from 'moment';
+import { Period } from './define';
 
 export const actions_constants = {
     ADD_RECORD: 'ADD_RECORD',
@@ -18,12 +19,6 @@ const sort_options = {
     SORT_NATURAL: 'SORT_NATURAL'
 };
 
-const Period = {
-    lastDay: 1,
-    lastWeek: 2,
-    lastMonth: 3,
-    lastYear: 4
-  };
 // actions
 
 const newRecordTemplate = {
@@ -65,11 +60,13 @@ export const editedRecord = (data) => {
 
 export const newSort = (sort = sort_options.SORT_BY_TIME) => ({type: actions_constants.CHANGE_SORT, sort})
 
+export const newPeriod = (period) => ({type: actions_constants.CHANGE_PERIOD, period})
+
 export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN, user: userName});
 
 const initialState = {
     records: [],
-    period: Period.lastDay,
+    period: Period.lastMonth,
     filter: '', // some text filter
     sort: '',
     user: '' // login user
@@ -121,12 +118,12 @@ export const filter = (text='', action) => {
     }
 }
 
-export const period = (period = Period.lastDay, action) => {
+export const period = (state = Period.lastDay, action) => {
     switch (action.type) {
         case actions_constants.CHANGE_PERIOD: {
             return action.period;
         }
-        default: return Period.lastDay;
+        default: return state;
     }
 }
 
@@ -148,17 +145,19 @@ export const user = (user='', action) => {
     }
 }
 
-const loginDetector = store => next => action => {
+const stateModifyDetector = store => next => action => {
     next(action);
-    if(action.type == actions_constants.UPDATE_LOGIN) {
+    if(action.type == actions_constants.UPDATE_LOGIN || action.type == actions_constants.CHANGE_PERIOD) {
         if (store.getState().user)
-            fetchData(Period.lastMonth);
+            fetchData(store.getState().period);
         else
             store.dispatch({type: actions_constants.FETCH_RECORDS, data: []})
     }
 }
 
-export const store = applyMiddleware(loginDetector)(createStore)(combineReducers({records, filter, sort, user}), initialState);
+export const store = applyMiddleware(stateModifyDetector)(createStore)(
+    combineReducers({records, filter, sort, period, user}), initialState
+);
 
 async function fetchData (period, buyer = '') {
     let data = await post('/data', {period, buyer});

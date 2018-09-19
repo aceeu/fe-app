@@ -40,3 +40,29 @@ export const TARGET = [
 ];
 
 export const DateFormat = 'D MMMM YYYY';
+
+export const Period = {
+    lastDay: 1,
+    lastWeek: 2,
+    lastMonth: 3,
+    lastYear: 4
+  };
+
+export const timePeriods = [
+    {
+        name: 'За текущий день',
+        value: Period.lastDay
+    },
+    {
+        name: 'За последнюю неделю',
+        value: Period.lastWeek
+    },
+    {
+        name: 'За месяц',
+        value: Period.lastMonth
+    },
+    {
+        name: 'За год',
+        value: Period.lastYear
+    },
+]
