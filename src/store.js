@@ -66,7 +66,7 @@ export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN,
 
 const initialState = {
     records: [],
-    period: Period.lastMonth,
+    period: Period.lastDay,
     filter: '', // some text filter
     sort: '',
     user: '' // login user
