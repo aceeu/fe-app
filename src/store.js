@@ -159,8 +159,25 @@ export const store = applyMiddleware(stateModifyDetector)(createStore)(
     combineReducers({records, filter, sort, period, user}), initialState
 );
 
+function getStartData(period) {
+  const Period = {
+    lastDay: 1,
+    lastWeek: 2,
+    lastMonth: 3,
+    lastYear: 4
+  };
+  switch (period) {
+    case Period.lastDay: return moment().subtract(1, 'days').toDate();
+    case Period.lastWeek: return moment().subtract(7, 'days').toDate();
+    case Period.lastMonth: return moment().subtract(1, 'months').toDate();
+    case Period.lastYear: return moment().subtract(50, 'days').toDate();
+    default: throw 'invalid period';
+  }
+}
+
 async function fetchData (period, buyer = '') {
-    let data = await post('/data', {period, buyer});
+    let fromDate = getStartData(period);
+    let data = await post('/data', {fromDate, buyer});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,
