@@ -64,10 +64,12 @@ export const newPeriod = (period) => ({type: actions_constants.CHANGE_PERIOD, pe
 
 export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN, user: userName});
 
+export const newFilter = (filter) => ({type: actions_constants.CHANGE_FILTER, filter});
+
 const initialState = {
     records: [],
     period: Period.lastDay,
-    filter: '', // some text filter
+    filter: {column: '', text: ''}, // some text filter
     sort: '',
     user: '' // login user
 }
@@ -109,12 +111,12 @@ export const records = (records = [], action) => {
 }
 
 
-export const filter = (text='', action) => {
+export const filter = (state = {}, action) => {
     switch(action.type) {
         case actions_constants.CHANGE_FILTER: {
-            return action.text;
+            return action.filter;
         }
-        default: return '';
+        default: return state;
     }
 }
 
@@ -147,9 +149,11 @@ export const user = (user='', action) => {
 
 const stateModifyDetector = store => next => action => {
     next(action);
-    if(action.type == actions_constants.UPDATE_LOGIN || action.type == actions_constants.CHANGE_PERIOD) {
+    if(action.type == actions_constants.UPDATE_LOGIN ||
+        action.type == actions_constants.CHANGE_PERIOD ||
+        action.type == actions_constants.CHANGE_FILTER) {
         if (store.getState().user)
-            fetchData(store.getState().period);
+            fetchData(store);
         else
             store.dispatch({type: actions_constants.FETCH_RECORDS, data: []})
     }
@@ -175,9 +179,10 @@ function getStartData(period) {
   }
 }
 
-async function fetchData (period, buyer = '') {
-    let fromDate = getStartData(period);
-    let data = await post('/data', {fromDate, buyer});
+async function fetchData (state) {
+    let fromDate = getStartData(state.getState().period);
+    let filter = state.getState().filter;
+    let data = await post('/data', {fromDate, filter});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,

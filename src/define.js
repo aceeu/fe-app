@@ -20,12 +20,12 @@ export const CATEGORIES = [
 ];
 
 export const BUYERS = [
-    "",
-    "Общие",
-    "Аня",
-    "Женя",
-    "Сеня",
-    "Лиза"
+    '',
+    'Общие',
+    'Аня',
+    'Женя',
+    'Сеня',
+    'Лиза'
 ];
 
 export const TARGET = [
