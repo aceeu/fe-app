@@ -25,7 +25,6 @@ export function post(url, data) {
         req.onload = () => {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status === 200) {
-                    console.log(`result: ${req.response}`);
                     resolves(JSON.parse(req.response))
                 } else {
                   rejects('There was a problem with the request.');

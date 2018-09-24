@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import './controls.css'
-import { Cell, Column, Table } from '@blueprintjs/table';
+import { Cell, Column, Table, RegionCardinality } from '@blueprintjs/table';
 
 const classes = {
     grid: 'grid',
@@ -13,8 +13,18 @@ const classes = {
 
 export class Grid extends React.Component {
     
+    onItemClick(rowIndex) {
+        this.props.onItemClick(rowIndex);
+    }
+
     cell1Renderer = (rowIndex, columnIndex) => {
-        return <Cell>{this.props.list[rowIndex][columnIndex]}</Cell>
+        return <Cell
+        >
+            <span onClick={e => this.onItemClick(rowIndex)}>
+                {this.props.list[rowIndex][columnIndex]}
+            </span>
+            
+        </Cell>
     };
 
     headers() {
@@ -25,7 +35,10 @@ export class Grid extends React.Component {
 
     render() {
         return (
-            <Table numRows={this.props.list.length}>
+            <Table 
+                numRows={this.props.list.length}
+                selectionModes={[RegionCardinality.FULL_ROWS]}
+            >
                 {this.headers()}
             </Table>
         );

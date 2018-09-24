@@ -19,7 +19,6 @@ export class Modal extends React.Component {
         this.props.onClose(null);
     }
     onAdd = (e) => {
-        console.log(this.data);
         if (this.isCorrect)
             this.props.onClose(this.data);
     }

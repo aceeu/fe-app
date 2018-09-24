@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { store,  actions_constants } from './store';
+import { store } from './store';
 import PropTypes from 'prop-types';
 import { TopContainer } from './view/top-container';
-import { get } from './communicate';
 
 class App extends Component {
   render() {

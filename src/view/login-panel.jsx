@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Login } from './login';
-import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
 import { get, post } from '../communicate';
 import { Button, Intent } from "@blueprintjs/core";

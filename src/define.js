@@ -44,8 +44,9 @@ export const DateFormat = 'D MMMM YYYY';
 export const Period = {
     lastDay: 1,
     lastWeek: 2,
-    lastMonth: 3,
-    lastYear: 4
+    lastWeek2: 3,
+    lastMonth: 4,
+    lastYear: 5
   };
 
 export const timePeriods = [
@@ -56,6 +57,10 @@ export const timePeriods = [
     {
         name: 'За последнюю неделю',
         value: Period.lastWeek
+    },
+    {
+        name: 'За 2 последние недели',
+        value: Period.lastWeek2
     },
     {
         name: 'За месяц',

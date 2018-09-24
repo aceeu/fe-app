@@ -23,7 +23,7 @@ export const TopContainer = (props) => {
         <div className={classes.topContainer}>
             <ActionsSection className={classes.actionSection}> </ActionsSection>
             <FiltersSection 
-                title={'Фильтры:'}
+                title={'Период:'}
                 selected={store.getState().period}
                 list={timePeriods} onSelect={(val => 
                     store.dispatch(newPeriod(val))
@@ -31,7 +31,7 @@ export const TopContainer = (props) => {
             > 
             </FiltersSection>
             <FiltersSection 
-                title={'Фильтр по покупателю:'}
+                title={'Покупатель:'}
                 selected={buyerFilter}
                 list={BUYERS.map(v => ({name: v == '' ? 'Все' : v, value: v}))}
                 onSelect={(val => 

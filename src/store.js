@@ -164,15 +164,11 @@ export const store = applyMiddleware(stateModifyDetector)(createStore)(
 );
 
 function getStartData(period) {
-  const Period = {
-    lastDay: 1,
-    lastWeek: 2,
-    lastMonth: 3,
-    lastYear: 4
-  };
+
   switch (period) {
     case Period.lastDay: return moment().subtract(1, 'days').toDate();
     case Period.lastWeek: return moment().subtract(7, 'days').toDate();
+    case Period.lastWeek2: return moment().subtract(14, 'days').toDate();
     case Period.lastMonth: return moment().subtract(1, 'months').toDate();
     case Period.lastYear: return moment().subtract(50, 'days').toDate();
     default: throw 'invalid period';

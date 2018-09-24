@@ -14,8 +14,9 @@ export class ListViewContainer extends React.Component {
 
     onEdit = async (obj) => {
         const {store} = this.context;
+        // TODO: надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
         let data = await ShowModal({}, 
-            <LineForm надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
+            <LineForm
                 _id={obj._id}
                 user={store.getState().user}
                 creator={obj.creator}
@@ -30,7 +31,6 @@ export class ListViewContainer extends React.Component {
         if (data) {
             // send data to the server
              const res = await post('/adddata', data);
-             console.log(res);
              if (res.res)
               store.dispatch(editedRecord(data));
             else
@@ -78,7 +78,7 @@ const ListView = ({records, onEdit}) => {
                 e.note
             ]
         }),
-        onItemClick: (i) => {console.log(records[i]); onEdit(records[i]);}
+        onItemClick: (i) => onEdit(records[i])
     }
     return (
         <Grid {...gridProps}/>
