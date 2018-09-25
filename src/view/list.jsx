@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 import './list.css';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { DateFormat } from '../define';
 import { Grid } from '../controls/grid';
 import LineForm from './lineForm';
 import { ShowModal } from './modal';
 import {post} from '../communicate';
 import { editedRecord } from '../store';
+import { Slider } from '@blueprintjs/core';
+
+const RecordsPerPage = 20;
 
 export class ListViewContainer extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {page: 0}
+    }
     onEdit = async (obj) => {
         const {store} = this.context;
         // TODO: надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
@@ -38,11 +44,37 @@ export class ListViewContainer extends React.Component {
         }
     }
 
+    onSliderChange = (val) => {
+        this.setState({page: val}, () => console.log(val));
+    }
+
+    // page from zero
+    getRecords = () => {
+        const from = (this.state.page) * RecordsPerPage;
+        let to = (this.state.page + 1) * RecordsPerPage;
+        to = Math.min(this.context.store.getState().records.length, to);
+        return this.context.store.getState().records.slice(from, to);
+    }
+
     render () {
         const {store} = this.context;
         return (
             <div className={'viewcontainer'}>
-                <ListView records={store.getState().records} onEdit={this.onEdit}/>
+                {
+                    store.getState().records.length > RecordsPerPage ?
+                        <Slider
+                            min={0}
+                            max={Math.floor(store.getState().records.length / RecordsPerPage)}
+                            stepSize={1}
+                            labelStepSize={1}
+                            onChange={val => this.onSliderChange(val)}
+                            value={this.state.page}
+                            showTrackFill={false}
+                        /> : null
+                }
+                <ListView records={this.getRecords()}
+                    onEdit={this.onEdit}
+                />
             </div>
         );
     }
