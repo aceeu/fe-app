@@ -34,6 +34,7 @@ export class ListViewContainer extends React.Component {
                 whom={obj.whom}
                 note={obj.note}
             />);
+        console.log(`onEdit data ${JSON.stringify(data)}`);
         if (data) {
             // send data to the server
              const res = await post('/adddata', data);
@@ -63,6 +64,7 @@ export class ListViewContainer extends React.Component {
                 {
                     store.getState().records.length > RecordsPerPage ?
                         <Slider
+                            className={'slider'}
                             min={0}
                             max={Math.floor(store.getState().records.length / RecordsPerPage)}
                             stepSize={1}

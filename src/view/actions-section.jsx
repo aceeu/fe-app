@@ -15,7 +15,9 @@ export class ActionsSection extends React.Component {
 
     onButtonAdd = async() => {
         const {store} = this.context;
-        let data = await ShowModal({}, <AddForm user={store.getState().user}/>);
+        let data = await ShowModal({purpose: true},
+            <AddForm user={store.getState().user}/>
+        );
         if (data) {
             // send data to the server
             const res = await post('/adddata', data);

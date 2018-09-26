@@ -1,4 +1,8 @@
 .viewcontainer {
   display: flex;
   flex-direction: column;
-  justify-content: space-around; }
+  justify-content: space-around;
+  align-items: center; }
+
+.slider {
+  width: initial; }

@@ -26,20 +26,25 @@ export class Modal extends React.Component {
         this.data = data;
         this.isCorrect = isCorrect;
     }
+
+    addOreditButton() {
+        return this.props.purpose ? 
+        <button onClick={this.onAdd}> Добавить </button> :
+        <button onClick={this.onAdd}> Изменить </button>
+    }
+
     render() {
         let this_ = this;
         const clonedChildren = React.Children.map(this.props.children, (child) => {
-            return React.cloneElement(child, {onData: this.onData.bind(this_)});
+            return React.cloneElement(child, {onData: this.onData});
         })
         return (
             <div className={classes.popover}>
                 <div className={classes.modal}>
                     {clonedChildren}
                     <div className={classes.buttons}>
-                        <button
-                            onClick={this.onAdd}
-                        > Добавить </button>
 
+                        {this.addOreditButton()}
                         <button
                             onClick={this.onClose}
                         > Отмена </button>
@@ -51,13 +56,15 @@ export class Modal extends React.Component {
 }
 
 Modal.propsTypes = {
-    onClick: PropTypes.func.isRequired
+    purpose: PropTypes.bool // add or edit row
 }
 
-export function defer(contentElement) {
+export function defer(contentElementFunc) {
     const parent = appendToBody();
     const onClose = () => removeFromBody(parent);
-    const body = function(resolve, reject) {ReactDOM.render(contentElement(resolve), parent)};
+    const body = function(resolve, reject) {
+        ReactDOM.render(contentElementFunc(resolve), parent)
+    };
     return new Promise(body).finally(onClose);
 }
 
