@@ -69,7 +69,7 @@ export const newFilter = (filter) => ({type: actions_constants.CHANGE_FILTER, fi
 const initialState = {
     records: [],
     period: Period.lastDay,
-    filter: {column: '', text: ''}, // some text filter
+    filter: {},// {'columnName': ''}, // some text filter
     sort: '',
     user: '' // login user
 }
@@ -114,7 +114,7 @@ export const records = (records = [], action) => {
 export const filter = (state = {}, action) => {
     switch(action.type) {
         case actions_constants.CHANGE_FILTER: {
-            return action.filter;
+            return {...state, ...action.filter};
         }
         default: return state;
     }

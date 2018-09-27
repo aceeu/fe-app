@@ -35,7 +35,7 @@ export const TopContainer = (props) => {
                 selected={buyerFilter}
                 list={BUYERS.map(v => ({name: v == '' ? 'Все' : v, value: v}))}
                 onSelect={(val => 
-                    store.dispatch(newFilter({column: 'buyer', text: val}))
+                    store.dispatch(newFilter({buyer: val}))
                 )}
             > 
             </FiltersSection>
