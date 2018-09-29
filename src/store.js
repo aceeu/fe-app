@@ -66,8 +66,9 @@ export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN,
 
 export const newFilter = (filter) => ({type: actions_constants.CHANGE_FILTER, filter});
 
+const emptyData = {records: [], summary: {}};
 const initialState = {
-    records: [],
+    data: emptyData,
     period: Period.lastDay,
     filter: {},// {'columnName': ''}, // some text filter
     sort: '',
@@ -88,25 +89,23 @@ export const record = (record, action) => {
     }
 }
 
-export const records = (records = [], action) => {
+export const data = (data = emptyData, action) => {
     switch(action.type) {
         case actions_constants.ADD_RECORD: {
-            return [...records,
-                record({}, action)
-            ]
+            return {...data, records: [...data.records, record({}, action)]}
         }
         case actions_constants.EDIT_RECORD: {
-            return records.map(i => record(i, action));
+            return { ...data, records: data.records.map(i => record(i, action))};
         }
         case actions_constants.FETCH_RECORDS: {
             return action.data;
         }
         case actions_constants.UPDATE_LOGIN: {
             if(action.user)
-                return records;
-            else return [];
+                return data;
+            else return {records: [], summary:{}};
         }
-        default: return records;
+        default: return data;
     }
 }
 
@@ -160,7 +159,7 @@ const stateModifyDetector = store => next => action => {
 }
 
 export const store = applyMiddleware(stateModifyDetector)(createStore)(
-    combineReducers({records, filter, sort, period, user}), initialState
+    combineReducers({data, filter, sort, period, user}), initialState
 );
 
 function getStartData(period) {
@@ -182,7 +181,7 @@ async function fetchData (state) {
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,
-        data
+        data: {records: data.res, summary: data.summary}
       });
     }
   }

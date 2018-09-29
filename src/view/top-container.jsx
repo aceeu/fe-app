@@ -5,6 +5,7 @@ import { ActionsSection } from './actions-section';
 import { FiltersSection } from './filters-section';
 import { store, newPeriod, newFilter } from '../store';
 import { timePeriods, BUYERS } from '../define';
+import { Summary } from './summary';
 
  
 const classes = {
@@ -15,7 +16,8 @@ const classes = {
 }
 
 
-export const TopContainer = (props) => {
+export const TopContainer = () => {
+
     const filter = store.getState().filter;
     let buyerFilter = filter.column == 'buyer' ? filter.text : undefined;
 
@@ -42,6 +44,7 @@ export const TopContainer = (props) => {
             <div className={classes.listSection}>
                 <ListViewContainer/>
             </div>
+            <Summary summary={store.getState().data.summary}/>
         </div>
 
     )   

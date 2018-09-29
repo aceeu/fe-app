@@ -53,8 +53,9 @@ export class ListViewContainer extends React.Component {
     getRecords = () => {
         const from = (this.state.page) * RecordsPerPage;
         let to = (this.state.page + 1) * RecordsPerPage;
-        to = Math.min(this.context.store.getState().records.length, to);
-        return this.context.store.getState().records.slice(from, to);
+        const records = this.context.store.getState().data.records || [];
+        to = Math.min(records.length, to);
+        return records.slice(from, to);
     }
 
     render () {
@@ -62,11 +63,11 @@ export class ListViewContainer extends React.Component {
         return (
             <div className={'viewcontainer'}>
                 {
-                    store.getState().records.length > RecordsPerPage ?
+                    store.getState().data.records.length > RecordsPerPage ?
                         <Slider
                             className={'slider'}
                             min={0}
-                            max={Math.floor(store.getState().records.length / RecordsPerPage)}
+                            max={Math.floor(store.getState().data.records.length / RecordsPerPage)}
                             stepSize={1}
                             labelStepSize={1}
                             onChange={val => this.onSliderChange(val)}
