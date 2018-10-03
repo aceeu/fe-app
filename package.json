@@ -6,6 +6,10 @@
     "@blueprintjs/core": "^3.5.1",
     "@blueprintjs/table": "^3.1.1",
     "cross-fetch": "^2.1.0",
+    "d3": "^5.7.0",
+    "d3-scale": "^2.1.2",
+    "d3-shape": "^1.2.2",
+    "d3-svg": "^0.2.2",
     "jssha": "^2.3.1",
     "moment": "^2.18.1",
     "node-sass-chokidar": "0.0.3",
@@ -27,5 +31,6 @@
     "dev": "npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "devDependencies": {}
 }

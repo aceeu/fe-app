@@ -5,7 +5,7 @@ import { ActionsSection } from './actions-section';
 import { FiltersSection } from './filters-section';
 import { store, newPeriod, newFilter } from '../store';
 import { timePeriods, BUYERS } from '../define';
-import { Summary } from './summary';
+import Summary from './summary';
 
  
 const classes = {
