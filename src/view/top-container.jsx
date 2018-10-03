@@ -19,8 +19,10 @@ const classes = {
 export const TopContainer = () => {
 
     const filter = store.getState().filter;
-    let buyerFilter = filter.column == 'buyer' ? filter.text : undefined;
-
+    let buyerFilter = filter.buyer ? filter.buyer : '';
+    const buyers = BUYERS.map(value => {
+        return value === '' ? {name: 'Все', value} : 
+        { name : value, value}});
     return (
         <div className={classes.topContainer}>
             <ActionsSection className={classes.actionSection}> </ActionsSection>
@@ -35,7 +37,7 @@ export const TopContainer = () => {
             <FiltersSection 
                 title={'Покупатель:'}
                 selected={buyerFilter}
-                list={BUYERS.map(v => ({name: v == '' ? 'Все' : v, value: v}))}
+                list={buyers}
                 onSelect={(val => 
                     store.dispatch(newFilter({buyer: val}))
                 )}
