@@ -41,7 +41,7 @@ const dataFilters = [
     },
     {
         name: dateFilter.LASTMONTH,
-        isIn: (dateStr) => isinNlastDays(10, dateStr)
+        isIn: (dateStr) => isinNlastDays(30, dateStr)
     },
     {
         name: dateFilter.LASTYEAR,

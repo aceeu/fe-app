@@ -22,6 +22,10 @@ export class Modal extends React.Component {
         if (this.isCorrect)
             this.props.onClose(this.data);
     }
+    onDel = () => {
+        this.data.category = '';
+        this.props.onClose(this.data);
+    }
     onData = (data, isCorrect) => {
         this.data = data;
         this.isCorrect = isCorrect;
@@ -30,11 +34,11 @@ export class Modal extends React.Component {
     addOreditButton() {
         return this.props.purpose ? 
         <button onClick={this.onAdd}> Добавить </button> :
-        <button onClick={this.onAdd}> Изменить </button>
+        [<button onClick={this.onAdd}> Изменить </button>,
+        <button onClick={this.onDel}> Удалить </button>]
     }
 
     render() {
-        let this_ = this;
         const clonedChildren = React.Children.map(this.props.children, (child) => {
             return React.cloneElement(child, {onData: this.onData});
         })

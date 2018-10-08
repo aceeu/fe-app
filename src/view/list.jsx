@@ -7,7 +7,7 @@ import { Grid } from '../controls/grid';
 import LineForm from './lineForm';
 import { ShowModal } from './modal';
 import {post} from '../communicate';
-import { editedRecord } from '../store';
+import { editedRecord, deleteRecord } from '../store';
 import { Slider } from '@blueprintjs/core';
 
 const RecordsPerPage = 20;
@@ -23,6 +23,7 @@ export class ListViewContainer extends React.Component {
         // TODO: надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
         let data = await ShowModal({}, 
             <LineForm
+                editMode={true}
                 _id={obj._id}
                 user={store.getState().user}
                 creator={obj.creator}
@@ -34,14 +35,24 @@ export class ListViewContainer extends React.Component {
                 whom={obj.whom}
                 note={obj.note}
             />);
-        console.log(`onEdit data ${JSON.stringify(data)}`);
         if (data) {
+            if (data.category === ''){
+                // remove data
+                const deldata = {_id: data._id};
+                const res = await post('/deldata', deldata);
+                if (res.res)
+                    store.dispatch(deleteRecord(deldata._id));
+                else
+                    window.alert(res.text);
+                return;
+            }
             // send data to the server
-             const res = await post('/adddata', data);
-             if (res.res)
+            const res = await post('/editdata', data);
+            console.log(JSON.stringify(data));
+            if (res.res)
               store.dispatch(editedRecord(data));
             else
-                window.alert(res.text);
+              window.alert(res.text);
         }
     }
 

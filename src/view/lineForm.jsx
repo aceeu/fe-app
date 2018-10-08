@@ -22,7 +22,13 @@ export default class LineForm extends React.Component {
             sum: props.sum,
             whom: props.whom,
             note: props.note,
-            invalidStatusSum: true // ошибка в заполнении полей
+            invalidStatusSum: false // ошибка в заполнении полей
+        }
+        if (this.props.editMode){
+            let st = {...this.state};
+            delete st.invalidStatusSum;
+            delete st.creator;
+            this.props.onData && this.props.onData(st, this.isCorrectData());    
         }
     }
 
@@ -37,6 +43,7 @@ export default class LineForm extends React.Component {
     componentDidUpdate() {
         let res = {
             _id: this.props._id,
+            creator: this.props.creator,
             buyDate: this.state.buyDate,
             category: this.state.category,
             buyer: this.state.buyer,
@@ -45,7 +52,6 @@ export default class LineForm extends React.Component {
             whom: this.state.whom,
             note: this.state.note
         };
-
         this.props.onData && this.props.onData(res, this.isCorrectData());
     }
 
@@ -131,6 +137,7 @@ export default class LineForm extends React.Component {
 }
 
 LineForm.propsTypes = {
+    editMode: PropTypes.bool,
     onData: PropTypes.func,
     user: PropTypes.string.isRequired,
 

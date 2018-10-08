@@ -43,7 +43,7 @@ export class Login extends React.Component {
                 ></TextInput>
                 <label>Пароль</label>
                 <TextInput 
-                    onBlur={e => this.setState({user: e.currentTarget.value})}
+                    onBlur={e => this.setState({password: e.currentTarget.value})}
                     onEnter={e => {
                         this.setState({password: e}, () => {this.props.onData(this.state)});
                     }}

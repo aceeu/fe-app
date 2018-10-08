@@ -58,6 +58,13 @@ export const editedRecord = (data) => {
     }
 }
 
+export const deleteRecord = (id) => {
+    return {
+        type: actions_constants.DELETE_RECORD,
+        id
+    }
+}
+
 export const newSort = (sort = sort_options.SORT_BY_TIME) => ({type: actions_constants.CHANGE_SORT, sort})
 
 export const newPeriod = (period) => ({type: actions_constants.CHANGE_PERIOD, period})
@@ -89,13 +96,16 @@ export const record = (record, action) => {
     }
 }
 
-export const data = (data = emptyData, action) => {
+export const data = (data = [], action) => {
     switch(action.type) {
         case actions_constants.ADD_RECORD: {
             return {...data, records: [...data.records, record({}, action)]}
         }
         case actions_constants.EDIT_RECORD: {
             return { ...data, records: data.records.map(i => record(i, action))};
+        }
+        case actions_constants.DELETE_RECORD: {
+            return data.filter(v => v.id != action.id);
         }
         case actions_constants.FETCH_RECORDS: {
             return action.data;
@@ -167,9 +177,9 @@ function getStartData(period) {
   switch (period) {
     case Period.lastDay: return moment().subtract(1, 'days').toDate();
     case Period.lastWeek: return moment().subtract(7, 'days').toDate();
-    case Period.lastWeek2: return moment().subtract(14, 'days').toDate();
-    case Period.lastMonth: return moment().subtract(1, 'months').toDate();
-    case Period.lastYear: return moment().subtract(50, 'days').toDate();
+    case Period.thisMonth: return moment().startOf('month').toDate();
+    case Period.last30days: return moment().subtract(30, 'days').toDate();
+    case Period.lastYear: return moment().startOf('year').toDate();
     default: throw 'invalid period';
   }
 }
