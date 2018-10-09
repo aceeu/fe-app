@@ -22,7 +22,7 @@ export class ActionsSection extends React.Component {
             // send data to the server
             const res = await post('/adddata', data);
             if (res.res)
-                store.dispatch(newRecord(data));
+                store.dispatch(newRecord(res.row)); // сервер вернет строку с _id
         }
     }
 
