@@ -19,7 +19,7 @@ export default class LineForm extends React.Component {
             category: props.category,
             buyer: props.buyer,
             product: props.product,
-            sum: props.sum,
+            sum: +props.sum,
             whom: props.whom,
             note: props.note,
             invalidStatusSum: false // ошибка в заполнении полей
@@ -113,10 +113,10 @@ export default class LineForm extends React.Component {
                             let value = e.currentTarget.value;
                             value = value.replace(',', '.');
                             const invalidStatusSum = this.isNaNSum(value);
-                            this.setState({invalidStatusSum, sum: Number.parseFloat(value)});                        
+                            this.setState({invalidStatusSum, sum: value == '' ? '' : Number.parseFloat(value)});                        
                         }}
                         negative={this.state.invalidStatusSum || this.state.sum === 0}
-                        value={+this.state.sum}
+                        value={this.state.sum}
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {this.state.sum} </div>
                 </div>
