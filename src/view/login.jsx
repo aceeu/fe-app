@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TextInput, NumericInput } from '../controls/input';
 import PropTypes from 'prop-types';
 import { get } from '../communicate';
+import './login.css';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ export class Login extends React.Component {
     render() {
         return this.state.token === undefined ? this.renderEnterMess() :
             (
-            <div>
+            <div className={'login'}>
                 <label>Имя</label>
                 <TextInput 
                     onBlur={

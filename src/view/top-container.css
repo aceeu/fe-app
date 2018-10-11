@@ -17,6 +17,6 @@
   flex-direction: row; }
 
 .list-section {
-  padding: 30px;
+  padding: 3px;
   max-height: 600px;
-  overflow-y: auto; }
+  overflow: auto; }

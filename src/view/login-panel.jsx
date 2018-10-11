@@ -38,15 +38,14 @@ export class LoginPanel extends React.Component {
     async onLogin(data) {
         const senddata = {user: data.user, hash: jssha(data.password + data.token)};
         const res = await post(`/auth`, senddata);      
-        this.props.onLogin(res.name);
+        if (res.res === true)
+            this.props.onLogin(res.name);
+        else 
+            window.alert(res.text);
     }
 
     render() {
-        return (
-            <div>
-                {this.props.user ? this.renderLogoutButton() : <Login onData={e => this.onLogin(e)}/>}
-            </div>
-        );
+        return this.props.user ? this.renderLogoutButton() : <Login onData={e => this.onLogin(e)}/>;
     }
 }
 

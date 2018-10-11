@@ -1,6 +1,7 @@
 .filters-section {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   font-size: 1.3em; }
   .filters-section-title {
     color: black;

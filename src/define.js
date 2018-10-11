@@ -23,9 +23,7 @@ export const BUYERS = [
     '',
     'Общие',
     'Аня',
-    'Женя',
-    'Сеня',
-    'Лиза'
+    'Женя'
 ];
 
 export const TARGET = [
@@ -51,23 +49,23 @@ export const Period = {
 
 export const timePeriods = [
     {
-        name: 'За текущий день',
+        name: 'день',
         value: Period.lastDay
     },
     {
-        name: 'За последнюю неделю',
+        name: 'неделя',
         value: Period.lastWeek
     },
     {
-        name: 'Этот месяц',
+        name: 'месяц',
         value: Period.thisMonth
     },
     {
-        name: '30 дней',
+        name: '30дн',
         value: Period.last30days
     },
     {
-        name: 'За год',
+        name: 'год',
         value: Period.lastYear
     },
 ]
