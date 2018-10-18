@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { TextInput, NumericInput } from '../controls/input';
+import { TextInput } from '../controls/input';
 import PropTypes from 'prop-types';
 import { get } from '../communicate';
 import './login.css';
+import { Button, Text } from '@blueprintjs/core';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -22,9 +23,10 @@ export class Login extends React.Component {
 
     renderEnterMess() {
         return (
-            <div onClick={this.onEMess}>
+            <Button 
+                onClick={this.onEMess}>
                 Войти
-            </div>
+            </Button>
         );
     }
 
@@ -32,7 +34,7 @@ export class Login extends React.Component {
         return this.state.token === undefined ? this.renderEnterMess() :
             (
             <div className={'login'}>
-                <label>Имя</label>
+                <Text>Имя</Text>
                 <TextInput 
                     onBlur={
                         e => this.setState({user: e.currentTarget.value})
@@ -42,7 +44,7 @@ export class Login extends React.Component {
                     }}
                     negative={this.state.user.length < 3}
                 ></TextInput>
-                <label>Пароль</label>
+                <Text>Пароль</Text>
                 <TextInput 
                     onBlur={e => this.setState({password: e.currentTarget.value})}
                     onEnter={e => {

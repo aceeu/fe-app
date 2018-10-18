@@ -97,7 +97,7 @@ export const record = (record, action) => {
     }
 }
 
-export const data = (data = [], action) => {
+export const data = (data = emptyData, action) => {
     switch(action.type) {
         case actions_constants.ADD_RECORD: {
             return {...data, records: [...data.records, record({}, action)]}
@@ -106,7 +106,7 @@ export const data = (data = [], action) => {
             return { ...data, records: data.records.map(i => record(i, action))};
         }
         case actions_constants.DELETE_RECORD: {
-            return data.filter(v => v.id != action.id);
+            return {...data, records: data.records.filter(v => v.id != action.id)};
         }
         case actions_constants.FETCH_RECORDS: {
             return action.data;
@@ -114,7 +114,7 @@ export const data = (data = [], action) => {
         case actions_constants.UPDATE_LOGIN: {
             if(action.user)
                 return data;
-            else return {records: [], summary:{}};
+            else return emptyData;
         }
         default: return data;
     }
@@ -165,7 +165,7 @@ const stateModifyDetector = store => next => action => {
         if (store.getState().user)
             fetchData(store);
         else
-            store.dispatch({type: actions_constants.FETCH_RECORDS, data: []})
+            store.dispatch({type: actions_constants.FETCH_RECORDS, data: emptyData})
     }
 }
 

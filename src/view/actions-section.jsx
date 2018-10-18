@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { AddForm } from './addForm';
-import { newRecord, updateLogin } from '../store';
+import { newRecord } from '../store';
 import { ShowModal } from './modal';
 import { PropTypes } from 'prop-types';
-import { LoginPanel } from './login-panel';
-import { get, post } from '../communicate';
+import { post } from '../communicate';
 import { Button, Intent } from "@blueprintjs/core";
 
 export class ActionsSection extends React.Component {
@@ -26,14 +25,9 @@ export class ActionsSection extends React.Component {
         }
     }
 
-    onLogin = (user) => {
-        const { store } = this.context;
-        store.dispatch(updateLogin(user));
-    }
-
     renderButtonAdd() {
         return (
-            <Button onClick={this.onButtonAdd} intent={Intent.SUCCESS}>+</Button>
+            <Button onClick={this.onButtonAdd} intent={Intent.SUCCESS}>Добавить</Button>
         );
     }
 
@@ -43,10 +37,6 @@ export class ActionsSection extends React.Component {
         return (
         <div className={this.props.className}>
             {user ? this.renderButtonAdd() : null}
-            <LoginPanel
-                user={user}
-                onLogin={this.onLogin}
-            />
         </div>
         );
     }

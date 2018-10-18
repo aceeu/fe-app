@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Login } from './login';
 import { PropTypes } from 'prop-types';
 import { get, post } from '../communicate';
-import { Button, Intent } from "@blueprintjs/core";
+import { Button, Intent, Text } from '@blueprintjs/core';
+import './login.css'
 
 function jssha(text) {
     const shaObj = new window.jsSHA("SHA-256", "TEXT");
@@ -18,20 +19,16 @@ export class LoginPanel extends React.Component {
             this.props.onLogin('');
     }
 
-    renderButton() {
-        return (
-            <Button onClick={this.onLoginButton} intent={Intent.SUCCESS}>Авторизация</Button>
-        )
-    }
-
     renderLogoutButton() {
         return (
-            <div>
-                {this.props.user}
+            <React.Fragment>
+                <div style={{height: 'fitContent'}}>
+                    {this.props.user}
+                </div>
                 <Button onClick={this.onLogoutButton} intent={Intent.PRIMARY}>
                     Выйти
                 </Button>
-            </div>
+            </React.Fragment>
         )
     }
 
@@ -45,7 +42,11 @@ export class LoginPanel extends React.Component {
     }
 
     render() {
-        return this.props.user ? this.renderLogoutButton() : <Login onData={e => this.onLogin(e)}/>;
+        return (
+            <div className='loginPanel'>
+                {this.props.user ? this.renderLogoutButton() : <Login onData={e => this.onLogin(e)}/>}
+            </div>
+        );
     }
 }
 

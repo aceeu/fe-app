@@ -3,3 +3,10 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.loginPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+}

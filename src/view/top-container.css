@@ -10,7 +10,7 @@
 .action-section {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end; }
+  justify-content: center; }
 
 .filter-section {
   display: flex;
