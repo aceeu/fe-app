@@ -10,7 +10,6 @@ export class AddForm extends React.Component {
         return (<LineForm   
             onData={this.props.onData}
             user={this.props.user}
-
             creator={this.props.user}
             buyDate={moment()}
             category={''}
@@ -19,11 +18,13 @@ export class AddForm extends React.Component {
             sum={0}
             whom={''}
             note={''}
+            categories={this.props.categories}
         />);
     }
 }
 
 AddForm.propsTypes = {
     onData: PropTypes.func,
-    user: PropTypes.string.isRequired
+    user: PropTypes.string.isRequired,
+    categories: PropTypes.array.isRequired
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import DatePicker from 'react-datepicker';
 import './addForm.css'
 import moment from 'moment';
-import { BUYERS, CATEGORIES, TARGET, DateFormat } from '../define';
+import { BUYERS, TARGET, DateFormat } from '../define';
 import { Select } from '../controls/select';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -89,7 +89,7 @@ export default class LineForm extends React.Component {
                 </div>
                 <label>Категория</label>
                 <Select
-                    options={CATEGORIES}
+                    options={this.props.categories}
                     onSelect={e => this.setState({category: e})}
                     negative={this.state.category.length === 0}
                     value={this.state.category}
@@ -149,5 +149,6 @@ LineForm.propsTypes = {
     product: PropTypes.string.isRequired,
     sum: PropTypes.number.isRequired,
     whom: PropTypes.string.isRequired,
-    note: PropTypes.string.isRequired
+    note: PropTypes.string.isRequired,
+    categories: PropTypes.array.isRequred
 }

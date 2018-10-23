@@ -11,7 +11,8 @@ export const actions_constants = {
     CHANGE_SORT: 'CHANGE_SORT',
     CHANGE_FILTER: 'CHANGE_FILTER',
     CHANGE_PERIOD: 'CHANGE_PERIOD',
-    UPDATE_LOGIN: 'UPDATE_LOGIN'
+    UPDATE_LOGIN: 'UPDATE_LOGIN',
+    FETCH_CATEGORIES: 'FETCH_CATEGORIES'
 };
 const sort_options = {
     SORT_BY_TIME: 'SORT_BY_TIME',
@@ -74,13 +75,16 @@ export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN,
 
 export const newFilter = (filter) => ({type: actions_constants.CHANGE_FILTER, filter});
 
+export const fetchCategories = (categories) => ({type: actions_constants.FETCH_CATEGORIES, categories})
+
 const emptyData = {records: [], summary: {}};
 const initialState = {
     data: emptyData,
     period: Period.lastDay,
     filter: {},// {'columnName': ''}, // some text filter
     sort: '',
-    user: '' // login user
+    user: '', // login user
+    categories: []
 }
 
 // reducers
@@ -139,12 +143,12 @@ export const period = (state = Period.lastDay, action) => {
     }
 }
 
-export const sort = (sort = '', action) => {
+export const sort = (sort = sort_options.SORT_NATURAL, action) => {
     switch(action.type) {
         case actions_constants.CHANGE_SORT: {
             return action.sort;
         }
-        default: return sort_options.SORT_NATURAL;
+        default: return sort;
     }
 }
 
@@ -154,6 +158,15 @@ export const user = (user='', action) => {
             return action.user;
         }
         default: return user;
+    }
+}
+
+export const categories = (categories=[], action) => {
+    switch (action.type) {
+        case actions_constants.FETCH_CATEGORIES: {
+            return action.categories;
+        }
+        default: return categories;
     }
 }
 
@@ -170,7 +183,7 @@ const stateModifyDetector = store => next => action => {
 }
 
 export const store = applyMiddleware(stateModifyDetector)(createStore)(
-    combineReducers({data, filter, sort, period, user}), initialState
+    combineReducers({data, filter, sort, period, user, categories}), initialState
 );
 
 function getStartData(period) {

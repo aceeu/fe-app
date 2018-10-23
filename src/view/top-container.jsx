@@ -1,12 +1,14 @@
 import * as React from 'react';
 import './top-container.css';
+import { PropTypes } from 'prop-types';
 import { ListViewContainer } from './list';
 import { ActionsSection } from './actions-section';
 import { FiltersSection } from './filters-section';
-import { store, newPeriod, newFilter, updateLogin } from '../store';
+import { newPeriod, newFilter, updateLogin, fetchCategories } from '../store';
 import { timePeriods, BUYERS } from '../define';
 import Summary from './summary';
 import { LoginPanel } from './login-panel';
+import { get } from '../communicate';
 
 const classes = {
     topContainer: 'top-container',
@@ -15,9 +17,14 @@ const classes = {
     listSection: 'list-section'
 }
 
-export const TopContainer = () => {
+export const TopContainer = (props, {store}) => {
     const onLogin = (user) => {
         store.dispatch(updateLogin(user));
+        get('/categories').then(r => {
+            r.res.sort((a, b) => (b.entry - a.entry));
+            const categories = r.res.map(v => v.cat);
+            store.dispatch(fetchCategories(categories));
+        })
     }
 
     const user = store.getState().user;
@@ -28,14 +35,17 @@ export const TopContainer = () => {
                 user={user}
                 onLogin={onLogin}
             />
-            <Content store={store}/>
+            <Content/>
         </div>
 
     )   
 }
 
-const Content = (props) => {
-    const {store} = props;
+TopContainer.contextTypes = {
+    store: PropTypes.object
+}
+
+const Content = (props, {store}) => {
     const user = store.getState().user;
     if (user == '' || user == null)
         return null;
@@ -72,4 +82,8 @@ const Content = (props) => {
             <Summary summary={store.getState().data.summary}/>
         </React.Fragment>
     );
+}
+
+Content.contextTypes = {
+    store: PropTypes.object
 }
