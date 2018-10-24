@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { ListViewContainer } from './list';
 import { ActionsSection } from './actions-section';
 import { FiltersSection } from './filters-section';
-import { newPeriod, newFilter, updateLogin, fetchCategories } from '../store';
+import { newPeriod, newFilter, updateLogin, fetchCategoriesAndApply } from '../store';
 import { timePeriods, BUYERS } from '../define';
 import Summary from './summary';
 import { LoginPanel } from './login-panel';
@@ -20,11 +20,7 @@ const classes = {
 export const TopContainer = (props, {store}) => {
     const onLogin = (user) => {
         store.dispatch(updateLogin(user));
-        get('/categories').then(r => {
-            r.res.sort((a, b) => (b.entry - a.entry));
-            const categories = r.res.map(v => v.cat);
-            store.dispatch(fetchCategories(categories));
-        })
+        fetchCategoriesAndApply();
     }
 
     const user = store.getState().user;

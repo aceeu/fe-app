@@ -208,12 +208,22 @@ async function fetchData (state) {
         data: {records: data.res, summary: data.summary}
       });
     }
-  }
+}
+
+export function fetchCategoriesAndApply() {
+    get('/categories').then(r => {
+        r.res.sort((a, b) => (b.entry - a.entry));
+        const categories = r.res.map(v => v.cat);
+        store.dispatch(fetchCategories(categories));
+    })
+}
 
 
 (async () => {
     const res = get(`/user`).then(res => {
-        if (res.name)
+        if (res.name) {
             store.dispatch(updateLogin(res.name));
+            fetchCategoriesAndApply();
+        }
     });
 })();
