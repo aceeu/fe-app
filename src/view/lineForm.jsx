@@ -37,8 +37,7 @@ export default class LineForm extends React.Component {
     isCorrectData() {
         return !this.state.invalidStatusSum
             && this.state.buyer.length !== 0
-            && this.state.category.length !== 0
-            && this.state.product.length !== 0;
+            && this.state.category.length !== 0;
     }
     componentDidUpdate() {
         let res = {
@@ -100,7 +99,6 @@ export default class LineForm extends React.Component {
                     onChange={e => {
                         this.setState({product: e.currentTarget.value});
                     }}
-                    negative={this.state.product.length < 3}
                     value={this.state.product}
                 ></TextInput>
                 <label>Сумма расхода</label>

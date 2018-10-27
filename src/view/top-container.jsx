@@ -8,7 +8,6 @@ import { newPeriod, newFilter, updateLogin, fetchCategoriesAndApply } from '../s
 import { timePeriods, BUYERS } from '../define';
 import Summary from './summary';
 import { LoginPanel } from './login-panel';
-import { get } from '../communicate';
 
 const classes = {
     topContainer: 'top-container',
