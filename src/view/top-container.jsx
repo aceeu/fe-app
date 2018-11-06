@@ -72,7 +72,7 @@ const Content = (props, {store}) => {
             </FiltersSection>
             <ActionsSection className={classes.actionSection}> </ActionsSection>
             <div className={classes.listSection}>
-                <ListViewContainer/>
+                <ListViewContainer categories={store.getState().categories}/>
             </div>
             <Summary summary={store.getState().data.summary}/>
         </React.Fragment>

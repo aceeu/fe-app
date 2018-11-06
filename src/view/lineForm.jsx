@@ -24,11 +24,13 @@ export default class LineForm extends React.Component {
             note: props.note,
             invalidStatusSum: false // ошибка в заполнении полей
         }
-        if (this.props.editMode){
+        if (this.props.editMode) {
             let st = {...this.state};
             delete st.invalidStatusSum;
             delete st.creator;
             this.props.onData && this.props.onData(st, this.isCorrectData());    
+        } else {
+            this.state.category = props.categories[0];
         }
     }
 

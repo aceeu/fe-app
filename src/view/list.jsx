@@ -34,6 +34,7 @@ export class ListViewContainer extends React.Component {
                 sum={obj.sum}
                 whom={obj.whom}
                 note={obj.note}
+                categories={this.props.categories}
             />);
         if (data) {
             if (data.category === ''){
