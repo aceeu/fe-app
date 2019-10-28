@@ -8,6 +8,17 @@ import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TextInput, NumericInput } from '../controls/input';
 
+function mathExpSum(exp) {
+    if (typeof exp === 'string') {
+        let expr = exp.split(' ').join('');
+        let values = expr.split('+');
+        let sum = (a, v) => a + Number.parseFloat(v);
+        return values.reduce(sum, 0);
+    } else if (typeof exp === 'number')
+        return +exp;
+    return NaN;
+}
+
 export default class LineForm extends React.Component {
 
     constructor(props) {
@@ -49,15 +60,11 @@ export default class LineForm extends React.Component {
             category: this.state.category,
             buyer: this.state.buyer,
             product: this.state.product,
-            sum: this.state.sum,
+            sum: mathExpSum(this.state.sum),
             whom: this.state.whom,
             note: this.state.note
         };
         this.props.onData && this.props.onData(res, this.isCorrectData());
-    }
-
-    isNaNSum (value) {
-        return Number.isNaN(Number.parseFloat(value));
     }
 
     render() {
@@ -112,13 +119,14 @@ export default class LineForm extends React.Component {
                         onChange={e => {
                             let value = e.currentTarget.value;
                             value = value.replace(',', '.');
-                            const invalidStatusSum = this.isNaNSum(value);
-                            this.setState({invalidStatusSum, sum: value == '' ? '' : Number.parseFloat(value)});                        
+                            const sum = mathExpSum(value);
+                            const invalidStatusSum = isNaN(sum);
+                            this.setState({invalidStatusSum, sum: value});
                         }}
                         negative={this.state.invalidStatusSum || this.state.sum === 0}
                         value={this.state.sum}
                     />
-                    <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {this.state.sum} </div>
+                    <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
                 </div>
                 <label>Кому покупка</label>
                 <Select

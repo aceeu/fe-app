@@ -126,7 +126,7 @@ function getChar(event) {
   return null; // спец. символ
 }
 
-const NUMERIC_CHARACTERS_REGEX = /^[Ee0-9\\+\-\\.\\,]$/;
+const NUMERIC_CHARACTERS_REGEX = /^[Ee0-9+\-.,]$/;
 
 export class NumericInput extends React.Component {
   onKeyPress = (e) => {
