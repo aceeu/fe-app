@@ -5,7 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import { Grid } from '../controls/grid';
 import LineForm from './lineForm';
-import { ShowModal } from './modal';
+import { ShowModal } from './modal2';
 import {post} from '../communicate';
 import { editedRecord, deleteRecord } from '../store';
 import { Slider } from '@blueprintjs/core';

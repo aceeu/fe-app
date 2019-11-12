@@ -63,21 +63,12 @@ Modal.propsTypes = {
     purpose: PropTypes.bool // add or edit row
 }
 
-export function defer(contentElementFunc) {
-    const parent = appendToBody();
-    const onClose = () => removeFromBody(parent);
-    const body = function(resolve, reject) {
-        ReactDOM.render(contentElementFunc(resolve), parent)
-    };
-    return new Promise(body).finally(onClose);
-}
-
-export function ShowModal(props, content) {
-    return defer(resolve =>
-      <Modal {...props} show inline onClose={resolve}>
-        {content}
-      </Modal>
-    );
-  }
+// export function ShowModal(props, content) {
+//     return defer(resolve =>
+//       <Modal {...props} show inline onClose={resolve}>
+//         {content}
+//       </Modal>
+//     );
+//   }
 
 

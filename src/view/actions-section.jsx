@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AddForm } from './addForm';
+import AddForm from './addForm';
 import { newRecord } from '../store';
-import { ShowModal } from './modal';
+import { ShowModal } from './modal2';
 import { PropTypes } from 'prop-types';
 import { post } from '../communicate';
 import { Button, Intent } from "@blueprintjs/core";

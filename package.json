@@ -12,12 +12,12 @@
     "d3-svg": "^0.2.2",
     "jssha": "^2.3.1",
     "moment": "^2.18.1",
-    "node-sass-chokidar": "0.0.3",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-datepicker": "^1.2.2",
     "react-dom": "^16.2.0",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "styled-components": "^4.4.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -31,6 +31,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.2",
     "react-scripts": "^3.2.0"
   },

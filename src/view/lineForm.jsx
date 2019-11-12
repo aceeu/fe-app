@@ -33,11 +33,11 @@ export default class LineForm extends React.Component {
             sum: +props.sum,
             whom: props.whom,
             note: props.note,
-            invalidStatusSum: false // ошибка в заполнении полей
+            isInvalid: false // ошибка в заполнении полей
         }
         if (this.props.editMode) {
             let st = {...this.state};
-            delete st.invalidStatusSum;
+            delete st.isInvalid;
             delete st.creator;
             this.props.onData && this.props.onData(st, this.isCorrectData());    
         } else {
@@ -47,8 +47,8 @@ export default class LineForm extends React.Component {
 
     onEnter = e => {}
     handleChange = e => this.setState({buyDate: e})
-    isCorrectData() {
-        return !this.state.invalidStatusSum
+isCorrectData() {
+        return !this.state.isInvalid
             && this.state.buyer.length !== 0
             && this.state.category.length !== 0;
     }
@@ -123,7 +123,7 @@ export default class LineForm extends React.Component {
                             const invalidStatusSum = isNaN(sum);
                             this.setState({invalidStatusSum, sum: value});
                         }}
-                        negative={this.state.invalidStatusSum || this.state.sum === 0}
+                        negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
