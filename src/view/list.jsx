@@ -6,11 +6,54 @@ import 'moment/locale/ru';
 import { Grid } from '../controls/grid';
 import LineForm from './lineForm';
 import { ShowModal } from './modal2';
-import {post} from '../communicate';
+import { post } from '../communicate';
 import { editedRecord, deleteRecord } from '../store';
 import { Slider } from '@blueprintjs/core';
+import { Buttons } from './modal2';
 
 const RecordsPerPage = 20;
+const editButtonsList = [{name: 'Изменить', id: 'Edit'}, {name: 'Отмена', id: 'Cancel'}];
+
+class Editform extends React.PureComponent {
+    data;
+    onData = data => this.data = data;
+
+    onClick = id => {
+        console.log('onEditClick ' + JSON.stringify(this.data));
+        if (id == 'Cancel')
+            this.props.onClick();
+        if (id == 'Edit' && this.data)
+            this.props.onClick(this.data)
+    }
+
+    render() {
+        let obj = this.props.line;
+        return (
+            <React.Fragment>
+                <LineForm
+                    editMode={true}
+                    _id={obj._id}
+                    user={this.props.user}
+                    creator={obj.creator}
+                    buyDate={moment(obj.buyDate)}
+                    category={obj.category}
+                    buyer={obj.buyer}
+                    product={obj.product}
+                    sum={obj.sum}
+                    whom={obj.whom}
+                    note={obj.note}
+                    categories={this.props.categories}
+                    onData={this.onData}
+                />
+                <Buttons
+                    buttonsList={editButtonsList}
+                    onClick={id => this.onClick(id)}
+                >
+                </Buttons>
+            </React.Fragment>
+        );
+    }
+}
 
 export class ListViewContainer extends React.Component {
 
@@ -18,26 +61,18 @@ export class ListViewContainer extends React.Component {
         super(props);
         this.state = {page: 0}
     }
-    onEdit = async (obj) => {
+    onEdit = async (line) => {
         const {store} = this.context;
         // TODO: надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
-        let data = await ShowModal({}, 
-            <LineForm
-                editMode={true}
-                _id={obj._id}
+        let data = await ShowModal({},
+            <Editform
+                line={line}
+                categories={store.getState().categories}
                 user={store.getState().user}
-                creator={obj.creator}
-                buyDate={moment(obj.buyDate)}
-                category={obj.category}
-                buyer={obj.buyer}
-                product={obj.product}
-                sum={obj.sum}
-                whom={obj.whom}
-                note={obj.note}
-                categories={this.props.categories}
-            />);
+            />
+            );
         if (data) {
-            if (data.category === ''){
+            if (data.category === '') {
                 // remove data
                 const deldata = {_id: data._id};
                 const res = await post('/deldata', deldata);

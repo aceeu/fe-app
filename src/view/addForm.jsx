@@ -8,14 +8,12 @@ const addButtonsList = [{name: 'Add', id: 'Add'}, {name: 'Cancel', id: 'Cancel'}
 
 export default class AddForm extends React.PureComponent {
     data;
-    onData = (data, validData) => {
-        this.data = {...data, validData};
-    }
+    onData = data => this.data = data;
 
     onClick = id => {
         if (id == 'Cancel')
             this.props.onClick();
-        if (id == 'Add' && this.data && this.data.validData)
+        if (id == 'Add' && this.data)
             this.props.onClick(this.data)
     }
 

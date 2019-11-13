@@ -39,7 +39,7 @@ export default class LineForm extends React.Component {
             let st = {...this.state};
             delete st.isInvalid;
             delete st.creator;
-            this.props.onData && this.props.onData(st, this.isCorrectData());    
+            // this.props.onData && this.props.onData(st, this.isCorrectData());    
         } else {
             this.state.category = props.categories[0];
         }
@@ -50,7 +50,8 @@ export default class LineForm extends React.Component {
 isCorrectData() {
         return !this.state.isInvalid
             && this.state.buyer.length !== 0
-            && this.state.category.length !== 0;
+            && this.state.category.length !== 0
+            && isNaN(mathExpSum(this.state.sum)) === false
     }
     componentDidUpdate() {
         let res = {
@@ -64,7 +65,7 @@ isCorrectData() {
             whom: this.state.whom,
             note: this.state.note
         };
-        this.props.onData && this.props.onData(res, this.isCorrectData());
+        this.isCorrectData() && this.props.onData && this.props.onData(res);
     }
 
     render() {
