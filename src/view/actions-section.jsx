@@ -8,10 +8,6 @@ import { Button, Intent } from "@blueprintjs/core";
 
 export class ActionsSection extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     onButtonAdd = async() => {
         const {store} = this.context;
         let data = await ShowModal({purpose: true},

@@ -110,7 +110,7 @@ export const data = (data = emptyData, action) => {
             return { ...data, records: data.records.map(i => record(i, action))};
         }
         case actions_constants.DELETE_RECORD: {
-            return {...data, records: data.records.filter(v => v.id != action.id)};
+            return {...data, records: data.records.filter(v => v.id !== action.id)};
         }
         case actions_constants.FETCH_RECORDS: {
             return action.data;
@@ -172,9 +172,9 @@ export const categories = (categories=[], action) => {
 
 const stateModifyDetector = store => next => action => {
     next(action);
-    if(action.type == actions_constants.UPDATE_LOGIN ||
-        action.type == actions_constants.CHANGE_PERIOD ||
-        action.type == actions_constants.CHANGE_FILTER) {
+    if(action.type === actions_constants.UPDATE_LOGIN ||
+        action.type === actions_constants.CHANGE_PERIOD ||
+        action.type === actions_constants.CHANGE_FILTER) {
         if (store.getState().user)
             fetchData(store);
         else
@@ -194,7 +194,7 @@ function getStartData(period) {
     case Period.thisMonth: return moment().startOf('month').toDate();
     case Period.last30days: return moment().subtract(30, 'days').toDate();
     case Period.lastYear: return moment().startOf('year').toDate();
-    default: throw 'invalid period';
+    default: throw Error('invalid period');
   }
 }
 
@@ -220,7 +220,7 @@ export function fetchCategoriesAndApply() {
 
 
 (async () => {
-    const res = get(`/user`).then(res => {
+    get(`/user`).then(res => {
         if (res.name) {
             store.dispatch(updateLogin(res.name));
             fetchCategoriesAndApply();

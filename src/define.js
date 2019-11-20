@@ -20,6 +20,11 @@ export const TARGET = [
     'Родителям Жени'
 ];
 
+export const usersMap = {
+    'anna': 'Аня',
+    'ace': 'Женя'
+};
+
 export const DateFormat = 'D MMMM YYYY';
 
 export const Period = {

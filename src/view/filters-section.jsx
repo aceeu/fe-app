@@ -11,16 +11,15 @@ const classes = {
 }
 
 export const FiltersSection = (props) => {
-    const renderItems = () => {
-        return props.list.map(e => 
+    const renderItems = () => 
+        props.list.map(e => 
             <div 
-                className={cn(classes.item, e.value == props.selected ? classes.selected : undefined)}
+                className={cn(classes.item, e.value === props.selected ? classes.selected : undefined)}
                 onClick={() => {props.onSelect(e.value)}}
             >
                 {e.name}
             </div>
         );
-    }
 
     return (
         <div className={classes.top}>
@@ -28,7 +27,7 @@ export const FiltersSection = (props) => {
             {renderItems()}
         </div>
     )
-}
+};
 
 FiltersSection.propTypes = {
     list: PropTypes.array.isRequired, // {name: 'name, value: 0}

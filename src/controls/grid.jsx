@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import './controls.css'
 import { Cell, Column, Table, RegionCardinality } from '@blueprintjs/table';
 
-const classes = {
-    grid: 'grid',
-    gridHeader: 'grid--header',
-    gridHeaderItem: 'grid--header--item',
-    gridItem: 'grid--item',
-    gridItemOdd: 'grid--item--odd'
-}
-
 export class Grid extends React.Component {
     
     onItemClick(rowIndex) {

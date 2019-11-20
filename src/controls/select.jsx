@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import './controls.css';
-import { cn } from '../common/classnames';
 
 export const classes = {
     negative: 'textinput--negative'
@@ -12,7 +11,7 @@ export const Select = ({options, ...props}) => {
     return (
         <select
             onChange={e => props.onSelect(e.target.value)}
-            className={cn(props.negative && classes.negative)}
+            className={props.negative ? classes.negative : ''}
             {...props}
         >
             {ops}

@@ -4,16 +4,18 @@ import moment from 'moment';
 import LineForm from './lineForm';
 import {Buttons} from './modal2';
 
-const addButtonsList = [{name: 'Add', id: 'Add'}, {name: 'Cancel', id: 'Cancel'}];
+const addButtonsList = [{name: 'Add', id: 'Add', faIcon: 'fa fa-plus-square fa-2x',
+    style: {margin: '0 10px', color: 'green'}},
+{name: 'Cancel', id: 'Cancel', faIcon: 'fa fa-ban fa-2x', style: {margin: '0 10px', color: 'red'}}];
 
 export default class AddForm extends React.PureComponent {
     data;
     onData = data => this.data = data;
 
     onClick = id => {
-        if (id == 'Cancel')
+        if (id === 'Cancel')
             this.props.onClick();
-        if (id == 'Add' && this.data)
+        if (id === 'Add' && this.data)
             this.props.onClick(this.data)
     }
 

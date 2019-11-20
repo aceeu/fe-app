@@ -2,11 +2,12 @@ import * as React from 'react';
 import DatePicker from 'react-datepicker';
 import './addForm.css'
 import moment from 'moment';
-import { BUYERS, TARGET, DateFormat } from '../define';
+import { BUYERS, TARGET, DateFormat, usersMap } from '../define';
 import { Select } from '../controls/select';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TextInput, NumericInput } from '../controls/input';
+import { Radio, RadioGroup, Collapse } from "@blueprintjs/core";
 
 function mathExpSum(exp) {
     if (typeof exp === 'string') {
@@ -19,6 +20,22 @@ function mathExpSum(exp) {
     return NaN;
 }
 
+const Collapseable = props => {
+    const [isOpen, setOpen] = React.useState(false);
+    return <React.Fragment>
+        <i
+            onClick={() => setOpen(!isOpen)}
+            className={isOpen ? 'fa fa-minus-square-o fa-lg' : 'fa fa-plus-square-o fa-lg'}
+            style={{marginTop: '10px'}}
+        ></i>
+        <Collapse
+            isOpen={isOpen}
+        >
+            {props.children}
+        </Collapse>
+    </React.Fragment>
+}
+
 export default class LineForm extends React.Component {
 
     constructor(props) {
@@ -28,7 +45,7 @@ export default class LineForm extends React.Component {
             creator: props.creator,
             buyDate: props.buyDate, // в формате moment
             category: props.category,
-            buyer: props.buyer,
+            buyer: props.buyer || usersMap[this.props.user],
             product: props.product,
             sum: +props.sum,
             whom: props.whom,
@@ -39,7 +56,6 @@ export default class LineForm extends React.Component {
             let st = {...this.state};
             delete st.isInvalid;
             delete st.creator;
-            // this.props.onData && this.props.onData(st, this.isCorrectData());    
         } else {
             this.state.category = props.categories[0];
         }
@@ -71,30 +87,29 @@ isCorrectData() {
     render() {
         return (
             <div className={'addForm'}>
-                <label>{this.props.user}</label>
-                <label>Кто потратил</label>
-                <Select
-                    options={BUYERS}
-                    autoFocus
-                    onSelect={e => this.setState({buyer: e})}
-                    negative={this.state.buyer.length === 0}
-                    value={this.state.buyer}
-                />
-                <label>Дата покупки</label>
+                <RadioGroup
+                    label="Покупатель"
+                    onChange={e => this.setState({buyer: e.currentTarget.value})}
+                    selectedValue={this.state.buyer}
+                    inline
+                >
+                    {BUYERS.filter(b => !!b).map(b => <Radio key={b} label={b} value={b}></Radio>)}
+                </RadioGroup>
+                <label>Дата</label>
                 <div
                     style={{display: 'flex', flexDirection: 'row'}}
                 >
-                <DatePicker
-                    selected={this.state.buyDate}
-                    onChange={this.handleChange}
-                    dateFormat={DateFormat}
-                />
-                <button onClick={() => {
-                    const yesterday = this.state.buyDate.subtract(1, 'days');
-                    this.setState({buyDate: yesterday});
-                }}>
-                    -1 день
-                </button>
+                    <DatePicker
+                        selected={this.state.buyDate}
+                        onChange={this.handleChange}
+                        dateFormat={DateFormat}
+                    />
+                    <button onClick={() => {
+                        const yesterday = this.state.buyDate.subtract(1, 'days');
+                        this.setState({buyDate: yesterday});
+                    }}>
+                        -1 день
+                    </button>
                 </div>
                 <label>Категория</label>
                 <Select
@@ -126,20 +141,34 @@ isCorrectData() {
                         }}
                         negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
+                        defaultSelect
+                        type={'number'}
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
                 </div>
-                <label>Кому покупка</label>
-                <Select
-                    options={TARGET}
-                    onSelect={e => this.setState({whom: e})}
-                    value={this.state.whom}
-                />
-                <label>Примечание</label>
-                <textarea
-                    onChange={e => this.setState({note: e.target.value})}
-                    value={this.state.note}
-                ></textarea>
+                <Collapseable>
+                    <div
+                        className={'collapseable'}
+                    >
+                        <label>Кому покупка</label>
+                        <Select
+                            options={TARGET}
+                            onSelect={e => this.setState({whom: e})}
+                            value={this.state.whom}
+                        />
+                    </div>
+                </Collapseable>
+                <Collapseable>
+                    <div
+                        className={'collapseable'}
+                    >
+                        <label>Примечание</label>
+                        <textarea
+                            onChange={e => this.setState({note: e.target.value})}
+                            value={this.state.note}
+                        ></textarea>
+                    </div>
+                </Collapseable>
             </div>
         );
     }

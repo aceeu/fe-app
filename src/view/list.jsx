@@ -12,17 +12,15 @@ import { Slider } from '@blueprintjs/core';
 import { Buttons } from './modal2';
 
 const RecordsPerPage = 20;
-const editButtonsList = [{name: 'Изменить', id: 'Edit'}, {name: 'Отмена', id: 'Cancel'}];
+const editButtonsList = [{name: 'Изменить', id: 'Edit', faIcon: 'fa fa-pencil fa-2x', style: {margin: '0 10px', color: 'green'}},
+    {name: 'Отмена', id: 'Cancel', faIcon: 'fa fa-plus-square fa-2x', style: {margin: '0 10px', color: 'red'}}];
 
-class Editform extends React.PureComponent {
-    data;
+export class Editform extends React.PureComponent {
     onData = data => this.data = data;
-
     onClick = id => {
-        console.log('onEditClick ' + JSON.stringify(this.data));
-        if (id == 'Cancel')
+        if (id === 'Cancel')
             this.props.onClick();
-        if (id == 'Edit' && this.data)
+        if (id === 'Edit' && this.data)
             this.props.onClick(this.data)
     }
 
@@ -31,7 +29,7 @@ class Editform extends React.PureComponent {
         return (
             <React.Fragment>
                 <LineForm
-                    editMode={true}
+                    editMode
                     _id={obj._id}
                     user={this.props.user}
                     creator={obj.creator}

@@ -19,7 +19,8 @@ const classes = {
 export const TopContainer = (props, {store}) => {
     const onLogin = (user) => {
         store.dispatch(updateLogin(user));
-        fetchCategoriesAndApply();
+        if (user)
+            fetchCategoriesAndApply();
     }
 
     const user = store.getState().user;
@@ -42,35 +43,29 @@ TopContainer.contextTypes = {
 
 const Content = (props, {store}) => {
     const user = store.getState().user;
-    if (user == '' || user == null)
+    if (!user)
         return null;
 
     const filter = store.getState().filter;
-    let buyerFilter = filter.buyer ? filter.buyer : '';
-    const buyers = BUYERS.map(value => {
-        return value === '' ? {name: 'Все', value} : 
-        { name : value, value}});
+    const buyerFilter = filter.buyer ? filter.buyer : '';
+    const buyers = BUYERS.map(value => value === '' ? {name: 'Все', value} : { name : value, value});
 
     return (
         <React.Fragment>
             <FiltersSection 
                 title={'Период:'}
                 selected={store.getState().period}
-                list={timePeriods} onSelect={(val => 
-                    store.dispatch(newPeriod(val))
+                list={timePeriods} onSelect={(val => store.dispatch(newPeriod(val))
                 )}
-            > 
-            </FiltersSection>
+            />
             <FiltersSection 
                 title={'Покупатель:'}
                 selected={buyerFilter}
                 list={buyers}
-                onSelect={(val => 
-                    store.dispatch(newFilter({buyer: val}))
+                onSelect={(val => store.dispatch(newFilter({buyer: val}))
                 )}
-            > 
-            </FiltersSection>
-            <ActionsSection className={classes.actionSection}> </ActionsSection>
+            />
+            <ActionsSection className={classes.actionSection}/>
             <div className={classes.listSection}>
                 <ListViewContainer categories={store.getState().categories}/>
             </div>

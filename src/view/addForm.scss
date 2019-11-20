@@ -6,6 +6,10 @@
     &__item {
         align-items: stretch;
     }
+    & .collapseable {
+        display: flex;
+        flex-direction: column;
+    }
 }
 .addForm > label {
     padding-top: 10px;

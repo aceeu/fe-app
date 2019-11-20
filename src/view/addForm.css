@@ -5,6 +5,9 @@
   padding: 2em; }
   .addForm__item {
     align-items: stretch; }
+  .addForm .collapseable {
+    display: flex;
+    flex-direction: column; }
 
 .addForm > label {
   padding-top: 10px; }

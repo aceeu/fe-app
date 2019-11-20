@@ -62,13 +62,3 @@ export class Modal extends React.Component {
 Modal.propsTypes = {
     purpose: PropTypes.bool // add or edit row
 }
-
-// export function ShowModal(props, content) {
-//     return defer(resolve =>
-//       <Modal {...props} show inline onClose={resolve}>
-//         {content}
-//       </Modal>
-//     );
-//   }
-
-

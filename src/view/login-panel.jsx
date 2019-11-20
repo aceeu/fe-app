@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Login } from './login';
 import { PropTypes } from 'prop-types';
 import { get, post } from '../communicate';
-import { Button, Intent, Text } from '@blueprintjs/core';
+import { Button, Intent } from '@blueprintjs/core';
 import './login.css'
 
 function jssha(text) {
@@ -11,11 +11,11 @@ function jssha(text) {
     return shaObj.getHash("HEX");
   }
 
-export class LoginPanel extends React.Component {
+export class LoginPanel extends React.PureComponent {
 
     onLogoutButton = async() => {
         const res = await get(`/logout`);
-        if (res.res === true)
+        if (res.res)
             this.props.onLogin('');
     }
 
@@ -35,7 +35,7 @@ export class LoginPanel extends React.Component {
     async onLogin(data) {
         const senddata = {user: data.user, hash: jssha(data.password + data.token)};
         const res = await post(`/auth`, senddata);      
-        if (res.res === true)
+        if (res.res)
             this.props.onLogin(res.name);
         else 
             window.alert(res.text);

@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'Iosevka Web';
+	font-weight: 400;
+	font-style: normal;
+	src: url('fonts/iosevka-regular.woff2') format('woff2'), url('fonts/iosevka-regular.woff') format('woff'), url('fonts/iosevka-regular.ttf') format('truetype');
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -5,6 +12,7 @@
   position: absolute;
   height: 100%;
   width:100%;
+  font-family: 'Iosevka Web', Courier, monospace;
 }
 
 .App-logo {

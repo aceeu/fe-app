@@ -8,13 +8,14 @@ const classes = {
     buttons: 'buttons'
 }
 
-
 export let Buttons = (props) => {
     const b = props.buttonsList.map(element => 
         <button
+            key={element.id}
             onClick={() => props.onClick(element.id)}
+            style={element.style}
         >
-            {element.name}
+            {element.faIcon ? <i className={element.faIcon} ></i> : element.name}
         </button>
     );
     return (
