@@ -1,7 +1,23 @@
+@import 'colors-scheme.scss';
+
 .login {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: baseline;
+    font-size: 1.5em;
+    color: white;
+    &_name {
+        color: $vermillion;
+        margin: 5px 10px;
+    }
+    &_signOutButton {
+        cursor: pointer;
+    }
+    & input {
+        width: 80px;
+    }
 }
 
 .loginPanel {

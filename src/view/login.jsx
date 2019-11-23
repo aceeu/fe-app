@@ -1,57 +1,59 @@
 import * as React from 'react';
 import { TextInput } from '../controls/input';
 import PropTypes from 'prop-types';
-import { get } from '../communicate';
 import './login.css';
-import { Button, Text } from '@blueprintjs/core';
+import './styles.css';
 
 export class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            token: undefined,
+            phase: 0,
             user: '',
             password: ''
         }
     }
 
     onEMess = async () => {
-        const token = await get('/authtoken');
-        if(token.res)
-            this.setState({token: token.token});
+            this.setState({phase: 1});
     }
 
     renderEnterMess() {
         return (
-            <Button 
+            <div 
+                className={'text-button'}
                 onClick={this.onEMess}>
                 Войти
-            </Button>
+            </div>
         );
     }
 
     render() {
-        return this.state.token === undefined ? this.renderEnterMess() :
+        return !this.state.phase ? this.renderEnterMess() :
             (
             <div className={'login'}>
-                <Text>Имя</Text>
-                <TextInput 
-                    onBlur={
-                        e => this.setState({user: e.currentTarget.value})
-                    }
-                    onEnter={e => {
-                        this.setState({user: e}, () => {this.props.onData(this.state)});
-                    }}
-                    negative={this.state.user.length < 3}
-                ></TextInput>
-                <Text>Пароль</Text>
-                <TextInput 
-                    onBlur={e => this.setState({password: e.currentTarget.value})}
-                    onEnter={e => {
-                        this.setState({password: e}, () => {this.props.onData(this.state)});
-                    }}
-                    password
-                ></TextInput>
+                <label>
+                    Имя
+                    <TextInput 
+                        onBlur={
+                            e => this.setState({user: e.currentTarget.value})
+                        }
+                        onEnter={e => {
+                            this.setState({user: e}, () => {this.props.onData(this.state)});
+                        }}
+                        negative={this.state.user.length < 3}
+                    ></TextInput>
+                </label>
+                <label>Пароль
+                    <TextInput
+                        maxlength={15}
+                        onBlur={e => this.setState({password: e.currentTarget.value})}
+                        onEnter={e => {
+                            this.setState({password: e}, () => {this.props.onData(this.state)});
+                        }}
+                        password
+                    ></TextInput>
+                </label>
             </div>
         );
     }

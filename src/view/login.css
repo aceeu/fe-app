@@ -1,7 +1,18 @@
 .login {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  font-size: 1.5em;
+  color: white; }
+  .login_name {
+    color: #fc4a1a;
+    margin: 5px 10px; }
+  .login_signOutButton {
+    cursor: pointer; }
+  .login input {
+    width: 80px; }
 
 .loginPanel {
   display: flex;

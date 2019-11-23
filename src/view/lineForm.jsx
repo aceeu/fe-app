@@ -1,11 +1,13 @@
 import * as React from 'react';
 import DatePicker from 'react-datepicker';
-import './addForm.css'
+import './addForm.css';
+import './styles.css';
 import moment from 'moment';
 import { BUYERS, TARGET, DateFormat, usersMap } from '../define';
 import { Select } from '../controls/select';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
+import { cn } from '../common/classnames';
 import { TextInput, NumericInput } from '../controls/input';
 import { Radio, RadioGroup, Collapse } from "@blueprintjs/core";
 
@@ -25,7 +27,7 @@ const Collapseable = props => {
     return <React.Fragment>
         <i
             onClick={() => setOpen(!isOpen)}
-            className={isOpen ? 'fa fa-minus-square-o fa-lg' : 'fa fa-plus-square-o fa-lg'}
+            className={cn(isOpen ? 'fa fa-minus-square-o fa-lg' : 'fa fa-plus-square-o fa-lg', 'fa-button')}
             style={{marginTop: '10px'}}
         ></i>
         <Collapse

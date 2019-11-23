@@ -1,11 +1,16 @@
-@import '~@blueprintjs/core/lib/css/blueprint.css';
-@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import 'colors-scheme.scss';
 .top-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background-color: #e8ffeb;
+    background-color: $fresh;
     color: #383838;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
 .action-section {
@@ -14,13 +19,18 @@
     justify-content: center;
 }
 
+.filters-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .filter-section {
     display: flex;
     flex-direction: row;
 }
 
 .list-section {
-    padding: 3px;
-    max-height: 600px;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }

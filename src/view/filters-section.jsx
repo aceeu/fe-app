@@ -4,17 +4,17 @@ import './filters-section.css';
 import { cn } from '../common/classnames';
 
 const classes = {
-    top: 'filters-section',
-    item: 'filters-section-item',
-    selected: 'filters-section-selected',
-    title: 'filters-section-title'
+    filtersSection: 'filters-section',
+    filtersSectionItem: 'filters-section-item',
+    filtersSectionSelected: 'filters-section-selected',
+    filtersSectionTitle: 'filters-section-title'
 }
 
 export const FiltersSection = (props) => {
     const renderItems = () => 
         props.list.map(e => 
             <div 
-                className={cn(classes.item, e.value === props.selected ? classes.selected : undefined)}
+                className={cn(classes.filtersSectionItem, e.value === props.selected ? classes.filtersSectionSelected : undefined)}
                 onClick={() => {props.onSelect(e.value)}}
             >
                 {e.name}
@@ -22,8 +22,8 @@ export const FiltersSection = (props) => {
         );
 
     return (
-        <div className={classes.top}>
-            <div className={classes.title}>{props.title}</div>
+        <div className={classes.filtersSection}>
+            <div className={classes.filtersSectionTitle}>{props.title}</div>
             {renderItems()}
         </div>
     )

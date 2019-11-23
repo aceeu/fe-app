@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Login } from './login';
 import { PropTypes } from 'prop-types';
 import { get, post } from '../communicate';
-import { Button, Intent } from '@blueprintjs/core';
 import './login.css'
+import { cn } from '../common/classnames';
 
 function jssha(text) {
     const shaObj = new window.jsSHA("SHA-256", "TEXT");
@@ -21,19 +21,16 @@ export class LoginPanel extends React.PureComponent {
 
     renderLogoutButton() {
         return (
-            <React.Fragment>
-                <div style={{height: 'fitContent'}}>
-                    {this.props.user}
-                </div>
-                <Button onClick={this.onLogoutButton} intent={Intent.PRIMARY}>
-                    Выйти
-                </Button>
-            </React.Fragment>
+            <div className={'login'}>
+                <div className={'login_name'}>{this.props.user}</div>
+                <i className={cn('fa fa-sign-out', 'fa-button')} onClick={this.onLogoutButton}></i>
+            </div>
         )
     }
 
     async onLogin(data) {
-        const senddata = {user: data.user, hash: jssha(data.password + data.token)};
+        const token = await get('/authtoken');
+        const senddata = {user: data.user, hash: jssha(data.password + token)};
         const res = await post(`/auth`, senddata);      
         if (res.res)
             this.props.onLogin(res.name);

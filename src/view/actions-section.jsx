@@ -4,7 +4,7 @@ import { newRecord } from '../store';
 import { ShowModal } from './modal2';
 import { PropTypes } from 'prop-types';
 import { post } from '../communicate';
-import { Button, Intent } from "@blueprintjs/core";
+import { cn } from '../common/classnames';
 
 export class ActionsSection extends React.Component {
 
@@ -26,7 +26,10 @@ export class ActionsSection extends React.Component {
 
     renderButtonAdd() {
         return (
-            <Button onClick={this.onButtonAdd} intent={Intent.SUCCESS}>Добавить</Button>
+            <i
+                className={cn(this.props.className, 'fa fa-plus-circle', 'fa-button')}
+                onClick={this.onButtonAdd}
+            />
         );
     }
 

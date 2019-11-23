@@ -10,8 +10,10 @@ import Summary from './summary';
 import { LoginPanel } from './login-panel';
 
 const classes = {
+    content: 'content',
     topContainer: 'top-container',
     actionSection: 'action-section',
+    filtersContainer: 'filters-container',
     fiterSection: 'filter-section',
     listSection: 'list-section'
 }
@@ -41,7 +43,7 @@ TopContainer.contextTypes = {
     store: PropTypes.object
 }
 
-const Content = (props, {store}) => {
+export const Content = (props, {store}) => {
     const user = store.getState().user;
     if (!user)
         return null;
@@ -51,26 +53,28 @@ const Content = (props, {store}) => {
     const buyers = BUYERS.map(value => value === '' ? {name: 'Все', value} : { name : value, value});
 
     return (
-        <React.Fragment>
-            <FiltersSection 
-                title={'Период:'}
-                selected={store.getState().period}
-                list={timePeriods} onSelect={(val => store.dispatch(newPeriod(val))
-                )}
-            />
-            <FiltersSection 
-                title={'Покупатель:'}
-                selected={buyerFilter}
-                list={buyers}
-                onSelect={(val => store.dispatch(newFilter({buyer: val}))
-                )}
-            />
-            <ActionsSection className={classes.actionSection}/>
+        <div className={classes.content}>
+            <div className={classes.filtersContainer}>
+                <FiltersSection 
+                    title={'Период:'}
+                    selected={store.getState().period}
+                    list={timePeriods} onSelect={(val => store.dispatch(newPeriod(val))
+                    )}
+                />
+                <FiltersSection 
+                    title={'Покупатель:'}
+                    selected={buyerFilter}
+                    list={buyers}
+                    onSelect={(val => store.dispatch(newFilter({buyer: val}))
+                    )}
+                />
+            </div>
             <div className={classes.listSection}>
+                <ActionsSection className={classes.actionSection}/>
                 <ListViewContainer categories={store.getState().categories}/>
             </div>
             <Summary summary={store.getState().data.summary}/>
-        </React.Fragment>
+        </div>
     );
 }
 
