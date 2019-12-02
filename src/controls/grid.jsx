@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { cn } from '../common/classnames';
 import './controls.css'
 
 export const Grid = props => {
@@ -32,7 +33,7 @@ export const Grid = props => {
                     >
                         {   props.showColumns.map( column => 
                                 <div
-                                    className={'grid-row-item'}
+                                    className={cn('grid-row-item', column)}
                                     key={column}
                                     style={{width: props.headers[column].width}}
                                     title={row[column]}

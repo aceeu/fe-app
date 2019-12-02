@@ -135,12 +135,12 @@ ListViewContainer.contextTypes = {
 const ListView = ({records, onEdit}) => {
     moment.locale('ru');
     const gridProps = {
-        showColumns: ['date', 'product', 'category', 'buyer', 'sum', 'note'],
+        showColumns: ['buyer', 'date', 'product', 'category', 'sum', 'note'],
         headers: {
             // {label: '#', width: 20},
             // {label: 'в/создания', width: 100},
             // {label: 'в/изменения', width: 100},
-            date: {label: 'Дата', width: 130},
+            date: {label: 'Дата', width: 100},
             product: {label: 'Название', width: 100},
             category: {label: 'Категория', width: 100},
             // {label: 'Кто занес', width: 100},
