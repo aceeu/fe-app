@@ -1,5 +1,5 @@
 .summary {
-  position: relative; }
-  .summary-bar {
-    position: absolute;
-    height: 20px; }
+  position: relative;
+  margin: 2em; }
+  .summary--label {
+    font-size: .8em; }

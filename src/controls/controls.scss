@@ -1,4 +1,5 @@
-@import '~@blueprintjs/table/lib/css/table.css';
+@import '../view/colors-scheme.scss';
+
 .textinput {
     border: 1 solid;
     border-radius: 1;
@@ -29,18 +30,27 @@
   .grid {
     display: flex;
     flex-direction: column;
-    &--header {
+    background-color: $clean;
+    &-header {
       display: flex;
       flex-direction: row;
-      &--item {
-        background-color: rgb(174, 228, 253);
+      background-color: $sunshine;
+      border-bottom: black 2px solid;
+      &-item {
+        color: black;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
-    &--item {
+    &-row {
       display: flex;
       flex-direction: row;
-      &--odd {
-        background-color: rgb(139, 192, 148);
+      margin-top: 1em;
+      &-item {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

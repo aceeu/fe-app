@@ -1,17 +1,25 @@
+@import 'colors-scheme.scss';
+
 .filters-section {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     font-size: 1.3em;
+
     &-title {
-        color: black;
+        color: $sunshine;
         margin: 0 6px;
+        width: 110px;
     }
     &-item {
-        color: green;
-        margin: 0 5px;
+        color: white;
+        margin: 2px;
+        padding: 1px;
+        cursor: pointer;
     }
     &-selected {
-        color: red;
+        color: $vermillion;
+        border: solid 2px $vermillion;
+        border-radius: 5px;
     }
 }

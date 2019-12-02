@@ -1,40 +1,59 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import './controls.css'
-import { Cell, Column, Table, RegionCardinality } from '@blueprintjs/table';
 
-export class Grid extends React.Component {
+export const Grid = props => {
     
-    onItemClick(rowIndex) {
-        this.props.onItemClick(rowIndex);
-    }
-
-    cell1Renderer = (rowIndex, columnIndex) => {
-        return <Cell
+    const headers = () => 
+        <div
+            className={'grid-header'}
         >
-            <span onClick={e => this.onItemClick(rowIndex)}>
-                {this.props.list[rowIndex][columnIndex]}
-            </span>
-            
-        </Cell>
-    };
+        {            
+            props.showColumns.map((column, ci) => 
+                <div
+                    key={ci}
+                    className={'grid-header-item'}
+                    style={{width: props.headers[column].width}}
+                    title={props.headers[column].label}
+                >
+                    {props.headers[column].label}
+                </div>
+            )
+        }
+        </div>;
 
-    headers() {
-        return this.props.headers.map((header, ci) => (
-            <Column name={header.label} cellRenderer={(rI) => this.cell1Renderer(rI, ci)}/>
-        ));
-    }
+    const body = () => 
+        <React.Fragment>
+            {
+                props.list.map((row, i) => 
+                    <div
+                        key={i}
+                        className={'grid-row'}
+                    >
+                        {   props.showColumns.map( column => 
+                                <div
+                                    className={'grid-row-item'}
+                                    key={column}
+                                    style={{width: props.headers[column].width}}
+                                    title={row[column]}
+                                    onClick={() => props.onItemClick(i)}
+                                >
+                                     {row[column]}
+                                </div>
+                            )
+                        }
+                    </div>)
+            }
+        </React.Fragment>;
 
-    render() {
-        return (
-            <Table 
-                numRows={this.props.list.length}
-                selectionModes={[RegionCardinality.FULL_ROWS]}
+    return (
+            <div 
+                className={'grid'}
             >
-                {this.headers()}
-            </Table>
-        );
-    }
+                { headers() }
+                { body() }
+            </div>
+    );
 }
 
 Grid.propTypes = {

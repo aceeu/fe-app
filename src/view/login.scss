@@ -12,11 +12,11 @@
         color: $vermillion;
         margin: 5px 10px;
     }
-    &_signOutButton {
-        cursor: pointer;
-    }
     & input {
         width: 80px;
+    }
+    & label {
+        margin: 0 10px;
     }
 }
 

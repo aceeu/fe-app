@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import defer from './defer';
 import './modal.css';
+
 const classes = {
     modal: 'modal',
     popover: 'popover',

@@ -9,10 +9,10 @@
   .login_name {
     color: #fc4a1a;
     margin: 5px 10px; }
-  .login_signOutButton {
-    cursor: pointer; }
   .login input {
     width: 80px; }
+  .login label {
+    margin: 0 10px; }
 
 .loginPanel {
   display: flex;

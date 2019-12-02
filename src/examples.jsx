@@ -1,10 +1,11 @@
 import * as React from 'react';
+import moment from 'moment';
 import { ShowModal } from './view/modal2';
 import AddForm from './view/addForm';
 import { Editform } from './view/list';
 import { Content } from './view/top-container';
 import PropTypes from 'prop-types';
-import {store, updateLogin} from './store';
+import {store, updateLogin, newRecord} from './store';
 import { LoginPanel } from './view/login-panel';
 import './view/top-container.css';
 import './font-awesome.css';
@@ -75,3 +76,14 @@ export async function showModalExample() {
         />
     );
 }
+
+store.dispatch(newRecord(
+    {
+        creator: 'ace',
+        date: moment().format('YYYY-MM-DD'),
+        category: 'Продукты',
+        buyer: 'Аня',
+        product:'Хлеб',
+        sum: 20,
+        note: 'Примечание бла бла бла'
+    }));

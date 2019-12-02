@@ -1,7 +1,7 @@
-.summary{
+.summary {
     position: relative;
-    &-bar{
-        position: absolute;
-        height: 20px;
+    margin: 2em;
+    &--label {
+        font-size: .8em;
     }
 }

@@ -1,9 +1,13 @@
 @import 'colors-scheme.scss';
+#root {
+	height: 100vh;
+	background-color: $fresh;
+}
+
 .top-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background-color: $fresh;
     color: #383838;
 }
 
@@ -11,6 +15,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .action-section {

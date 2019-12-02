@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextInput } from '../controls/input';
 import PropTypes from 'prop-types';
+import { get } from '../communicate';
 import './login.css';
 import './styles.css';
 
@@ -8,14 +9,16 @@ export class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            phase: 0,
+            token: undefined,
             user: '',
             password: ''
         }
     }
 
     onEMess = async () => {
-            this.setState({phase: 1});
+        const token = await get('/authtoken');
+        if(token.res)
+            this.setState({token: token.token});
     }
 
     renderEnterMess() {
@@ -29,7 +32,7 @@ export class Login extends React.Component {
     }
 
     render() {
-        return !this.state.phase ? this.renderEnterMess() :
+        return this.state.token === undefined ? this.renderEnterMess() :
             (
             <div className={'login'}>
                 <label>

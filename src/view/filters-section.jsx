@@ -14,7 +14,7 @@ export const FiltersSection = (props) => {
     const renderItems = () => 
         props.list.map(e => 
             <div 
-                className={cn(classes.filtersSectionItem, e.value === props.selected ? classes.filtersSectionSelected : undefined)}
+                className={cn(classes.filtersSectionItem, e.value === props.selected && classes.filtersSectionSelected)}
                 onClick={() => {props.onSelect(e.value)}}
             >
                 {e.name}

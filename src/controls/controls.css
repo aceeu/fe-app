@@ -1,4 +1,3 @@
-@import url(~@blueprintjs/table/lib/css/table.css);
 .textinput {
   border: 1 solid;
   border-radius: 1;
@@ -19,14 +18,23 @@
 
 .grid {
   display: flex;
-  flex-direction: column; }
-  .grid--header {
+  flex-direction: column;
+  background-color: #dfdce3; }
+  .grid-header {
     display: flex;
-    flex-direction: row; }
-    .grid--header--item {
-      background-color: #aee4fd; }
-  .grid--item {
+    flex-direction: row;
+    background-color: #f7b733;
+    border-bottom: black 2px solid; }
+    .grid-header-item {
+      color: black;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+  .grid-row {
     display: flex;
-    flex-direction: row; }
-    .grid--item--odd {
-      background-color: #8bc094; }
+    flex-direction: row;
+    margin-top: 1em; }
+    .grid-row-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }

@@ -135,28 +135,24 @@ ListViewContainer.contextTypes = {
 const ListView = ({records, onEdit}) => {
     moment.locale('ru');
     const gridProps = {
-        headers: [
+        showColumns: ['date', 'product', 'category', 'buyer', 'sum', 'note'],
+        headers: {
             // {label: '#', width: 20},
             // {label: 'в/создания', width: 100},
             // {label: 'в/изменения', width: 100},
-            {label: 'Дата покупки', width: 150},
-            {label: 'Название', width: 200},
-            {label: 'Категория', width: 130},
+            date: {label: 'Дата', width: 130},
+            product: {label: 'Название', width: 100},
+            category: {label: 'Категория', width: 100},
             // {label: 'Кто занес', width: 100},
-            {label: 'Покупатель', width: 100},
-            {label: 'Сумма', width: 100},
-            {label: 'Примечание', width: 180}
-        ],
+            buyer: {label: 'Покупатель', width: 90},
+            sum: {label: 'Сумма', width: 100},
+            note: {label: 'Примечание', width: 50}
+        },
         list: records.map((e, i) => {
-            return [
-                moment(e.buyDate).format('D MMMM YYYY'),
-                e.product,
-                e.category,
-                // e.creator,
-                e.buyer,
-                e.sum,
-                e.note
-            ]
+            return {
+                date: moment(e.buyDate).format('D MMMM YYYY'),
+                ...e
+            }
         }),
         onItemClick: (i) => onEdit(records[i])
     }

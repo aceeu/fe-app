@@ -4,10 +4,15 @@
   flex-wrap: wrap;
   font-size: 1.3em; }
   .filters-section-title {
-    color: black;
-    margin: 0 6px; }
+    color: #f7b733;
+    margin: 0 6px;
+    width: 110px; }
   .filters-section-item {
-    color: green;
-    margin: 0 5px; }
+    color: white;
+    margin: 2px;
+    padding: 1px;
+    cursor: pointer; }
   .filters-section-selected {
-    color: red; }
+    color: #fc4a1a;
+    border: solid 2px #fc4a1a;
+    border-radius: 5px; }

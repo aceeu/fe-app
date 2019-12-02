@@ -29,9 +29,8 @@ export class LoginPanel extends React.PureComponent {
     }
 
     async onLogin(data) {
-        const token = await get('/authtoken');
-        const senddata = {user: data.user, hash: jssha(data.password + token)};
-        const res = await post(`/auth`, senddata);      
+        const senddata = {user: data.user, hash: jssha(data.password + data.token)};
+        const res = await post('/auth', senddata);      
         if (res.res)
             this.props.onLogin(res.name);
         else 

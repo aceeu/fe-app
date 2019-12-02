@@ -1,14 +1,19 @@
+#root {
+  height: 100vh;
+  background-color: #4abdac; }
+
 .top-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background-color: #4abdac;
   color: #383838; }
 
 .content {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row; }
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; }
 
 .action-section {
   display: flex;
