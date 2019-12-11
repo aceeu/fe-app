@@ -11,6 +11,7 @@ const classes = {
 }
 
 export const FiltersSection = (props) => {
+    const [displayList, setDisplayList] = React.useState(false);
     const renderItems = () => props.list.map((e, i) => 
             <div 
                 key={i}
@@ -21,10 +22,22 @@ export const FiltersSection = (props) => {
             </div>
         );
 
+    const fa = displayList ? 'fa fa-compress' : 'fa fa-expand';
     return (
         <div className={classes.filtersSection}>
-            <div className={classes.filtersSectionTitle}>{props.title}</div>
-            {renderItems()}
+            <div
+                className={classes.filtersSectionTitle}
+                onClick={() => setDisplayList(!displayList)}
+            >
+                {props.title}
+            </div>
+            <i 
+                className={fa}
+                aria-hidden='true'
+                onClick={() => setDisplayList(!displayList)}
+            >
+            </i>
+            {displayList && renderItems()}
         </div>
     )
 };

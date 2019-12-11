@@ -44,6 +44,7 @@ TopContainer.contextTypes = {
 }
 
 export const Content = (props, {store}) => {
+    const [showBarChart, setShowBarChart] = React.useState(false);
     const user = store.getState().user;
     if (!user)
         return null;
@@ -79,7 +80,12 @@ export const Content = (props, {store}) => {
                         )}
                     />
                 </div>
-                <Summary summary={store.getState().data.summary}/>
+                <i className='fa fa-bar-chart'
+                    aria-hidden='true'
+                    onClick={() => setShowBarChart(!showBarChart)}
+                    style={{color: showBarChart ? '#cccccc' : '#606060', margin: '.5em 1em', fontSize: '1.5em'}}
+                ></i>
+                {showBarChart ? <Summary summary={store.getState().data.summary}/> : null}
             </div>
             <ListViewContainer categories={store.getState().categories}/>
         </div>

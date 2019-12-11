@@ -4,10 +4,13 @@
   flex-wrap: wrap;
   font-size: 1.3em;
   align-items: baseline; }
+  .filters-section > i {
+    cursor: pointer; }
   .filters-section-title {
     color: black;
     margin: 0 6px;
-    width: 110px; }
+    width: 110px;
+    cursor: pointer; }
   .filters-section-item {
     color: green;
     margin: 2px;

@@ -15,6 +15,9 @@
     margin: 0 10px; }
 
 .loginPanel {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

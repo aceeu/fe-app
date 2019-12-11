@@ -6,11 +6,15 @@
     flex-wrap: wrap;
     font-size: 1.3em;
     align-items: baseline;
+    &>i {
+        cursor: pointer;
+    }
 
     &-title {
         color: black;
         margin: 0 6px;
         width: 110px;
+        cursor: pointer;
     }
     &-item {
         color: green;
