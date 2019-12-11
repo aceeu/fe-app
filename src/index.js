@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { Example } from './examples';
+import { Example, startExample } from './examples';
 
 if (process.env.NODE_ENV === 'production') {
     ReactDOM.render(<App />, document.getElementById('root'));
     registerServiceWorker();
 } else {
-    ReactDOM.render(<Example />, document.getElementById('root'));;
+    startExample();
+    ReactDOM.render(<Example />, document.getElementById('root'));
 }

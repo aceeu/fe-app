@@ -5,17 +5,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     font-size: 1.3em;
+    align-items: baseline;
 
     &-title {
-        color: $sunshine;
+        color: black;
         margin: 0 6px;
         width: 110px;
     }
     &-item {
-        color: white;
+        color: green;
         margin: 2px;
         padding: 1px;
         cursor: pointer;
+        font-size: smaller;
+        text-decoration: underline;
     }
     &-selected {
         color: $vermillion;

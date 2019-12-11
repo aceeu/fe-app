@@ -1,7 +1,15 @@
 @import 'colors-scheme.scss';
 #root {
-	height: 100vh;
-	background-color: $fresh;
+    position: absolute;
+    top: 0;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    background-image: url('tree.svg');
+    background-color: $fresh;
+    background-position: 90% 2%; /* Положение фона */
+    background-repeat: no-repeat; /* Отменяем повторение фона */
+    display: flex;
 }
 
 .top-container {
@@ -9,14 +17,21 @@
     display: flex;
     flex-direction: column;
     color: #383838;
+    height: 100%;
+    max-width: 100%;
 }
 
 .content {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.controls-section {
+    display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
 }
 
 .action-section {
@@ -33,10 +48,4 @@
 .filter-section {
     display: flex;
     flex-direction: row;
-}
-
-.list-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
 }

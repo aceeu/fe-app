@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as d3Scale from 'd3-scale';
 import './summary.css';
 
-const height = 100;
+const height = 70;
 const totalHeight = height + 40; // 40 labels
 const step = 50;
 

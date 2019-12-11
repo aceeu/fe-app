@@ -3,41 +3,42 @@ import PropTypes from 'prop-types';
 import { cn } from '../common/classnames';
 import './controls.css'
 
-export const Grid = props => {
+export const Grid = ({showColumns, headers, list = [], onItemClick}) => {
     
-    const headers = () => 
+    const headersDiv = () => 
         <div
             className={'grid-header'}
+            key={'header'}
         >
         {            
-            props.showColumns.map((column, ci) => 
+            showColumns.map((column, ci) => 
                 <div
                     key={ci}
                     className={'grid-header-item'}
-                    style={{width: props.headers[column].width}}
-                    title={props.headers[column].label}
+                    style={{width: headers[column].width + '%'}}
+                    title={headers[column].label}
                 >
-                    {props.headers[column].label}
+                    {headers[column].label}
                 </div>
             )
         }
         </div>;
 
-    const body = () => 
+    const body = (list) => 
         <React.Fragment>
             {
-                props.list.map((row, i) => 
+                list.map((row, i) => 
                     <div
                         key={i}
                         className={'grid-row'}
                     >
-                        {   props.showColumns.map( column => 
+                        {   showColumns.map( column => 
                                 <div
                                     className={cn('grid-row-item', column)}
                                     key={column}
-                                    style={{width: props.headers[column].width}}
+                                    style={{width: headers[column].width + '%'}}
                                     title={row[column]}
-                                    onClick={() => props.onItemClick(i)}
+                                    onClick={() => onItemClick(i)}
                                 >
                                      {row[column]}
                                 </div>
@@ -47,18 +48,18 @@ export const Grid = props => {
             }
         </React.Fragment>;
 
-    return (
-            <div 
-                className={'grid'}
-            >
-                { headers() }
-                { body() }
-            </div>
-    );
+    return ([
+        headersDiv(),
+        <div 
+            className={'grid'}
+        >
+            { body(list) }
+        </div>
+    ]);
 }
 
 Grid.propTypes = {
-    headers: PropTypes.array.isRequired,
+    headers: PropTypes.object.isRequired,
     list: PropTypes.array.isRequired,
     onItemClick: PropTypes.func.isRequired
 }

@@ -31,11 +31,16 @@
     display: flex;
     flex-direction: column;
     background-color: $clean;
+    flex-grow: 1;
+    font-size: .9em;
+    overflow: auto;
     &-header {
       display: flex;
       flex-direction: row;
       background-color: $sunshine;
-      border-bottom: black 2px solid;
+      // border-bottom: black 2px solid;
+      box-sizing: border-box;
+      height: 2em;
       &-item {
         color: black;
         overflow: hidden;
@@ -46,7 +51,8 @@
     &-row {
       display: flex;
       flex-direction: row;
-      margin-top: 1em;
+      min-height: fit-content;
+      align-items: baseline;
       &>.date {
         font-size: .8em;
       }
@@ -56,10 +62,36 @@
       &>.sum {
         font-weight: bolder;
       }
+      &>.product {
+        text-align: left;
+        overflow: unset;
+        text-overflow: unset;
+        white-space: unset;
+
+      }
       &-item {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+    }
+  }
+
+  .sheetnavigator {
+    display: flex;
+
+    &-item {
+      margin: 0 1em;
+      cursor: pointer;
+      &-selected {
+        color: $vermillion;
+        cursor: default;
+        ::before {
+          content: '[';
+        }
+        ::after {
+          content: ']';
+        }
       }
     }
   }

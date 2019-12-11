@@ -12,7 +12,8 @@ export const actions_constants = {
     CHANGE_FILTER: 'CHANGE_FILTER',
     CHANGE_PERIOD: 'CHANGE_PERIOD',
     UPDATE_LOGIN: 'UPDATE_LOGIN',
-    FETCH_CATEGORIES: 'FETCH_CATEGORIES'
+    FETCH_CATEGORIES: 'FETCH_CATEGORIES',
+    SETSUMMARY: 'SETSUMMARY'
 };
 const sort_options = {
     SORT_BY_TIME: 'SORT_BY_TIME',
@@ -75,7 +76,9 @@ export const updateLogin = (userName) => ({type: actions_constants.UPDATE_LOGIN,
 
 export const newFilter = (filter) => ({type: actions_constants.CHANGE_FILTER, filter});
 
-export const fetchCategories = (categories) => ({type: actions_constants.FETCH_CATEGORIES, categories})
+export const fetchCategories = (categories) => ({type: actions_constants.FETCH_CATEGORIES, categories});
+
+export const setSummary = (summary) => ({type: actions_constants.SETSUMMARY, summary});
 
 const emptyData = {records: [], summary: {}};
 const initialState = {
@@ -119,6 +122,9 @@ export const data = (data = emptyData, action) => {
             if(action.user)
                 return data;
             else return emptyData;
+        }
+        case actions_constants.SETSUMMARY: {
+            return  {records: data.records, summary: action.summary};
         }
         default: return data;
     }

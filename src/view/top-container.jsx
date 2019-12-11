@@ -2,7 +2,6 @@ import * as React from 'react';
 import './top-container.css';
 import { PropTypes } from 'prop-types';
 import { ListViewContainer } from './list';
-import { ActionsSection } from './actions-section';
 import { FiltersSection } from './filters-section';
 import { newPeriod, newFilter, updateLogin, fetchCategoriesAndApply } from '../store';
 import { timePeriods, BUYERS } from '../define';
@@ -15,7 +14,8 @@ const classes = {
     actionSection: 'action-section',
     filtersContainer: 'filters-container',
     fiterSection: 'filter-section',
-    listSection: 'list-section'
+    listSection: 'list-section',
+    controlsSection: 'controls-section'
 }
 
 export const TopContainer = (props, {store}) => {
@@ -50,30 +50,38 @@ export const Content = (props, {store}) => {
 
     const filter = store.getState().filter;
     const buyerFilter = filter.buyer ? filter.buyer : '';
-    const buyers = BUYERS.map(value => value === '' ? {name: 'Все', value} : { name : value, value});
+    const categoryFilter = filter.category ? filter.category : '';
+    const buyers = [{name: 'Все', value: ''}, ...BUYERS.map(value => ({ name : value, value}))];
+    const categoriesList = [{name: 'Все', value: ''}, ...store.getState().categories.map(c => ({name: c, value: c}))]
 
     return (
         <div className={classes.content}>
-            <div className={classes.filtersContainer}>
-                <FiltersSection 
-                    title={'Период:'}
-                    selected={store.getState().period}
-                    list={timePeriods} onSelect={(val => store.dispatch(newPeriod(val))
-                    )}
-                />
-                <FiltersSection 
-                    title={'Покупатель:'}
-                    selected={buyerFilter}
-                    list={buyers}
-                    onSelect={(val => store.dispatch(newFilter({buyer: val}))
-                    )}
-                />
+            <div className={classes.controlsSection}>
+                <div className={classes.filtersContainer}>
+                    <FiltersSection 
+                        title={'Период:'}
+                        selected={store.getState().period}
+                        list={timePeriods} onSelect={(val => store.dispatch(newPeriod(val))
+                        )}
+                    />
+                    <FiltersSection 
+                        title={'Покупатель:'}
+                        selected={buyerFilter}
+                        list={buyers}
+                        onSelect={(val => store.dispatch(newFilter({buyer: val}))
+                        )}
+                    />
+                    <FiltersSection 
+                        title={'Категория:'}
+                        selected={categoryFilter}
+                        list={categoriesList}
+                        onSelect={(val => store.dispatch(newFilter({category: val}))
+                        )}
+                    />
+                </div>
+                <Summary summary={store.getState().data.summary}/>
             </div>
-            <div className={classes.listSection}>
-                <ActionsSection className={classes.actionSection}/>
-                <ListViewContainer categories={store.getState().categories}/>
-            </div>
-            <Summary summary={store.getState().data.summary}/>
+            <ListViewContainer categories={store.getState().categories}/>
         </div>
     );
 }

@@ -19,12 +19,16 @@
 .grid {
   display: flex;
   flex-direction: column;
-  background-color: #dfdce3; }
+  background-color: #dfdce3;
+  flex-grow: 1;
+  font-size: .9em;
+  overflow: auto; }
   .grid-header {
     display: flex;
     flex-direction: row;
     background-color: #f7b733;
-    border-bottom: black 2px solid; }
+    box-sizing: border-box;
+    height: 2em; }
     .grid-header-item {
       color: black;
       overflow: hidden;
@@ -33,14 +37,33 @@
   .grid-row {
     display: flex;
     flex-direction: row;
-    margin-top: 1em; }
+    min-height: fit-content;
+    align-items: baseline; }
     .grid-row > .date {
       font-size: .8em; }
     .grid-row > .category {
       font-weight: bolder; }
     .grid-row > .sum {
       font-weight: bolder; }
+    .grid-row > .product {
+      text-align: left;
+      overflow: unset;
+      text-overflow: unset;
+      white-space: unset; }
     .grid-row-item {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
+
+.sheetnavigator {
+  display: flex; }
+  .sheetnavigator-item {
+    margin: 0 1em;
+    cursor: pointer; }
+    .sheetnavigator-item-selected {
+      color: #fc4a1a;
+      cursor: default; }
+      .sheetnavigator-item-selected ::before {
+        content: '['; }
+      .sheetnavigator-item-selected ::after {
+        content: ']'; }

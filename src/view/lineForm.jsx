@@ -63,9 +63,11 @@ export default class LineForm extends React.Component {
         }
     }
 
-    onEnter = e => {}
+    onEnter = e => this.props.onEnter(e);
+    
     handleChange = e => this.setState({buyDate: e})
-isCorrectData() {
+    
+    isCorrectData() {
         return !this.state.isInvalid
             && this.state.buyer.length !== 0
             && this.state.category.length !== 0
@@ -90,7 +92,7 @@ isCorrectData() {
         return (
             <div className={'addForm'}>
                 <RadioGroup
-                    label="Покупатель"
+                    label='Покупатель'
                     onChange={e => this.setState({buyer: e.currentTarget.value})}
                     selectedValue={this.state.buyer}
                     inline
@@ -141,6 +143,7 @@ isCorrectData() {
                             const invalidStatusSum = isNaN(sum);
                             this.setState({invalidStatusSum, sum: value});
                         }}
+                        onEnter={this.onEnter}
                         negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
                         defaultSelect

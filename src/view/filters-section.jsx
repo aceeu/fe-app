@@ -11,9 +11,9 @@ const classes = {
 }
 
 export const FiltersSection = (props) => {
-    const renderItems = () => 
-        props.list.map(e => 
+    const renderItems = () => props.list.map((e, i) => 
             <div 
+                key={i}
                 className={cn(classes.filtersSectionItem, e.value === props.selected && classes.filtersSectionSelected)}
                 onClick={() => {props.onSelect(e.value)}}
             >
@@ -33,5 +33,5 @@ FiltersSection.propTypes = {
     list: PropTypes.array.isRequired, // {name: 'name, value: 0}
     onSelect: PropTypes.func.isRequired,
     title: PropTypes.string,
-    selected: PropTypes.number.isRequired
+    selected: PropTypes.string.isRequired
 }

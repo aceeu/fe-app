@@ -35,12 +35,12 @@ export default class AddForm extends React.PureComponent {
                     whom={''}
                     note={''}
                     categories={props.categories}
+                    onEnter={() => this.onClick('Add')}
                 />
                 <Buttons
                     buttonsList={addButtonsList}
                     onClick={id => this.onClick(id)}
-                >
-                </Buttons>
+                />
             </React.Fragment>
         );    
     }

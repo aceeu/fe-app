@@ -131,9 +131,14 @@ const NUMERIC_CHARACTERS_REGEX = /^[Ee0-9+\-.,]$/;
 export class NumericInput extends React.Component {
   onKeyPress = (e) => {
     const char = getChar(e);
-    if (NUMERIC_CHARACTERS_REGEX.test(char) === false)
+    if (e.keyCode == KeyCodes.ENTER && this.props.onEnter) {
+      e.preventDefault();
+      this.props.onEnter(e.currentTarget.value);
+    }
+    else if (NUMERIC_CHARACTERS_REGEX.test(char) === false)
       e.preventDefault();
   }
+
   render() {
     return (
       <TextInput

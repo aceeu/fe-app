@@ -1,19 +1,36 @@
+@charset "UTF-8";
 #root {
-  height: 100vh;
-  background-color: #4abdac; }
+  position: absolute;
+  top: 0;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  background-image: url("tree.svg");
+  background-color: #4abdac;
+  background-position: 90% 2%;
+  /* Положение фона */
+  background-repeat: no-repeat;
+  /* Отменяем повторение фона */
+  display: flex; }
 
 .top-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  color: #383838; }
+  color: #383838;
+  height: 100%;
+  max-width: 100%; }
 
 .content {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center; }
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+  overflow: hidden; }
+
+.controls-section {
+  display: flex;
+  flex-wrap: wrap; }
 
 .action-section {
   display: flex;
@@ -27,8 +44,3 @@
 .filter-section {
   display: flex;
   flex-direction: row; }
-
-.list-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; }
