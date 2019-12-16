@@ -118,6 +118,11 @@ export class ListViewContainer extends React.Component {
 
     onRowsDisplayed = count => this.setState({countPerPage: count});
 
+    totalSum() {
+        const summary = this.context.store.getState().data.summary;
+        const keys = Object.keys(summary);
+        return keys.reduce((a, k) => a + summary[k], 0)
+    }
     render () {
         const records = this.getRecords();
         const pages = Math.ceil(records.length / this.state.countPerPage);
@@ -131,6 +136,9 @@ export class ListViewContainer extends React.Component {
                         className={cn(this.props.className, 'fa fa-plus-circle', 'fa-button')}
                         onClick={this.onButtonAdd}
                     />
+                    <div>
+                        Сумма: {this.totalSum()}
+                    </div>
                 </div>
                 <ListView
                     records={records}
