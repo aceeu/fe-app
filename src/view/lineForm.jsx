@@ -147,7 +147,6 @@ export default class LineForm extends React.Component {
                         negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
                         defaultSelect
-                        type={'number'}
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
                 </div>

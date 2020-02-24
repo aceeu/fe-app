@@ -14,7 +14,7 @@ export function get(url) {
         };
         req.open('GET', url);
         req.setRequestHeader('Content-Type', 'text/json');
-        req.send();    
+        req.send();
     });
 }
 
