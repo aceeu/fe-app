@@ -1,8 +1,6 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import './modal.css';
 import PropTypes from 'prop-types';
-import {removeFromBody, appendToBody} from './dom'
 
 const classes = {
     modal: 'modal',
