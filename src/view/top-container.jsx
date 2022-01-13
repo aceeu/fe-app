@@ -52,8 +52,8 @@ export const Content = (props, {store}) => {
     const filter = store.getState().filter;
     const buyerFilter = filter.buyer ? filter.buyer : '';
     const categoryFilter = filter.category ? filter.category : '';
-    const buyers = [{name: 'Все', value: ''}, ...BUYERS.map(value => ({ name : value, value}))];
-    const categoriesList = [{name: 'Все', value: ''}, ...store.getState().categories.map(c => ({name: c, value: c}))]
+    const buyers = [{name: 'Все', value: 'Все'}, ...BUYERS.map(value => ({ name : value, value}))];
+    const categoriesList = [{name: 'Все', value: 'Все'}, ...store.getState().categories.map(c => ({name: c, value: c}))]
 
     return (
         <div className={classes.content}>
@@ -85,8 +85,8 @@ export const Content = (props, {store}) => {
                     onClick={() => setShowBarChart(!showBarChart)}
                     style={{color: showBarChart ? '#cccccc' : '#606060', margin: '.5em 1em', fontSize: '1.5em'}}
                 ></i>
-                {showBarChart ? <Summary summary={store.getState().data.summary}/> : null}
             </div>
+            {showBarChart ? <Summary summary={store.getState().data.summary}/> : null}
             <ListViewContainer categories={store.getState().categories}/>
         </div>
     );

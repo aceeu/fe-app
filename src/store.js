@@ -1,3 +1,4 @@
+
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { get, post } from './communicate';
 import moment from 'moment';
@@ -192,22 +193,48 @@ export const store = applyMiddleware(stateModifyDetector)(createStore)(
     combineReducers({data, filter, sort, period, user, categories}), initialState
 );
 
-function getStartData(period) {
+// function getStartData(period) {
 
-  switch (period) {
-    case Period.lastDay: return moment().subtract(1, 'days').toDate();
-    case Period.lastWeek: return moment().subtract(7, 'days').toDate();
-    case Period.thisMonth: return moment().startOf('month').toDate();
-    case Period.last30days: return moment().subtract(30, 'days').toDate();
-    case Period.lastYear: return moment().startOf('year').toDate();
-    default: throw Error('invalid period');
-  }
+//   switch (period) {
+//     case Period.lastDay: return moment().subtract(1, 'days').toDate();
+//     case Period.lastWeek: return moment().subtract(7, 'days').toDate();
+//     case Period.thisMonth: return moment().startOf('month').toDate();
+//     case Period.last30days: return moment().subtract(30, 'days').toDate();
+//     case Period.lastYear: return moment().startOf('year').toDate();
+//     default: throw Error('invalid period');
+//   }
+// }
+
+function getFromToDates(period) {
+    const res = {fromDate: null, toDate: moment().toDate()}
+    switch (period) {
+        case Period.lastWeek:
+            res.fromDate = moment().subtract(7, 'days').toDate()
+            break
+        case Period.thisMonth:
+            res.fromDate = moment().startOf('month').toDate();
+            break
+        case Period.last30days:
+            res.fromDate = moment().subtract(30, 'days').toDate();
+            break
+        case Period.lastYear:
+            res.fromDate = moment().startOf('year').toDate();
+            break
+        case Period.prevMonth: 
+            res.fromDate = moment().subtract(1, 'months').startOf('month')
+            res.toDate = moment().subtract(1, 'months').endOf('month')
+            break
+        case Period.lastDay: 
+        default:
+            res.fromDate = moment().subtract(1, 'days').toDate()
+    }
+    return res    
 }
 
 async function fetchData (state) {
-    let fromDate = getStartData(state.getState().period);
-    let filter = state.getState().filter;
-    let data = await post('/data', {fromDate, filter});
+    const filter = state.getState().filter;
+
+    const data = await post('/data', {...getFromToDates, filter});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,

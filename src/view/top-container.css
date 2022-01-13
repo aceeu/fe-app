@@ -30,7 +30,7 @@
 
 .controls-section {
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
   flex-wrap: wrap; }
 
 .action-section {
@@ -40,7 +40,8 @@
 
 .filters-container {
   display: flex;
-  flex-direction: column; }
+  margin: 10px
+}
 
 .filter-section {
   display: flex;

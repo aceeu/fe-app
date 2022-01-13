@@ -31,7 +31,8 @@ export const Period = {
     lastWeek: 2,
     thisMonth: 3,
     last30days: 4,
-    lastYear: 5
+    lastYear: 5,
+    prevMonth: 6,
   };
 
 export const timePeriods = [
@@ -55,4 +56,8 @@ export const timePeriods = [
         name: 'год',
         value: Period.lastYear
     },
+    {
+        name: 'пред месяц',
+        value: Period.prevMonth
+    }
 ]
