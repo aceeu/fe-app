@@ -10,7 +10,9 @@ import { post } from '../communicate';
 import AddForm from './addForm';
 import { editedRecord, deleteRecord, newRecord } from '../store';
 import { Buttons } from './modal2';
-import { cn } from '../common/classnames';
+import Button from '@mui/material/Button';
+import { ThemeProvider } from '@mui/material/styles';
+import { color_theme } from '../color-theme';
 
 const editButtonsList = [{name: 'Изменить', id: 'Edit', faIcon: 'fa fa-pencil fa-2x', style: {margin: '0 10px', color: 'green'}},
     {name: 'Отмена', id: 'Cancel', faIcon: 'fa fa-plus-square fa-2x', style: {margin: '0 10px', color: 'red'}}];
@@ -27,7 +29,7 @@ export class Editform extends React.PureComponent {
     render() {
         let obj = this.props.line;
         return (
-            <React.Fragment>
+            <ThemeProvider theme={color_theme}>
                 <LineForm
                     editMode
                     _id={obj._id}
@@ -48,7 +50,7 @@ export class Editform extends React.PureComponent {
                     onClick={id => this.onClick(id)}
                 >
                 </Buttons>
-            </React.Fragment>
+            </ThemeProvider>
         );
     }
 }
@@ -132,10 +134,11 @@ export class ListViewContainer extends React.Component {
         return (
             <div className={'viewcontainer'}>
                 <div className={'viewcontainer--tools'}>
-                    <i
+                    {/* <i
                         className={cn(this.props.className, 'fa fa-plus-circle', 'fa-button')}
                         onClick={this.onButtonAdd}
-                    />
+                    /> */}
+                    <Button variant="contained" onClick={this.onButtonAdd}>Добавить</Button>
                     <div>
                         Сумма: {this.totalSum()}
                     </div>

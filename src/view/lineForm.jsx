@@ -1,15 +1,33 @@
 import * as React from 'react';
-import DatePicker from 'react-datepicker';
+//import DatePicker from 'react-datepicker';
 import './addForm.css';
 import './styles.css';
 import moment from 'moment';
 import { BUYERS, TARGET, DateFormat, usersMap } from '../define';
-import { Select } from '../controls/select';
+//import { Select } from '../controls/select';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import { cn } from '../common/classnames';
 import { TextInput, NumericInput } from '../controls/input';
-import { Radio, RadioGroup, Collapse } from "@blueprintjs/core";
+// import { Radio, RadioGroup, Collapse } from "@blueprintjs/core";
+import {Collapse } from "@blueprintjs/core";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';
+import {
+    NativeSelect, InputLabel, Box,
+    Select, MenuItem, TextField 
+} from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import ruLocale from "date-fns/locale/ru";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+
 
 function mathExpSum(exp) {
     if (typeof exp === 'string') {
@@ -25,11 +43,9 @@ function mathExpSum(exp) {
 const Collapseable = props => {
     const [isOpen, setOpen] = React.useState(false);
     return <React.Fragment>
-        <i
-            onClick={() => setOpen(!isOpen)}
-            className={cn(isOpen ? 'fa fa-minus-square-o fa-lg' : 'fa fa-plus-square-o fa-lg', 'fa-button')}
-            style={{marginTop: '10px'}}
-        ></i>
+        {!isOpen ? <AddCircleOutlineIcon onClick={() => setOpen(!isOpen)}/>
+            : <RemoveCircleOutlineIcon onClick={() => setOpen(!isOpen)}/>
+        }
         <Collapse
             isOpen={isOpen}
         >
@@ -65,7 +81,7 @@ export default class LineForm extends React.Component {
 
     onEnter = e => this.props.onEnter(e);
     
-    handleChange = e => this.setState({buyDate: e})
+    handleChange = e => this.setState({buyDate: e.target.value})
     
     isCorrectData() {
         return !this.state.isInvalid
@@ -90,52 +106,74 @@ export default class LineForm extends React.Component {
 
     render() {
         return (
-            <div className={'addForm'}>
+            <Box
+                color='primary' sx={{ minWidth: 220 }}
+                bgcolor='primary.light'
+            >
+            <FormControl color='primary' fullWidth>
+                
                 <RadioGroup
-                    label='Покупатель'
+                    variant='outlined'
+                    row
+                    aria-label='Покупатель'
                     onChange={e => this.setState({buyer: e.currentTarget.value})}
-                    selectedValue={this.state.buyer}
-                    inline
+                    value={this.state.buyer}
                 >
-                    {BUYERS.filter(b => !!b).map(b => <Radio key={b} label={b} value={b}></Radio>)}
+                    {BUYERS.filter(b => !!b).map(b => <FormControlLabel key={b} value={b} control={<Radio />} label={b} />)}
                 </RadioGroup>
-                <label>Дата</label>
-                <div
-                    style={{display: 'flex', flexDirection: 'row'}}
-                >
-                    <DatePicker
-                        selected={this.state.buyDate}
-                        onChange={this.handleChange}
-                        dateFormat={DateFormat}
-                    />
-                    <button onClick={() => {
-                        const yesterday = this.state.buyDate.subtract(1, 'days');
-                        this.setState({buyDate: yesterday});
-                    }}>
-                        -1 день
-                    </button>
-                </div>
-                <label>Категория</label>
-                <Select
-                    options={this.props.categories}
-                    onSelect={e => this.setState({category: e})}
-                    negative={this.state.category.length === 0}
-                    value={this.state.category}
+
+                <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
+                <DatePicker
+                    label="Дата"
+                    value={this.state.buyDate}
+                    onChange={this.handleChange}
+                    renderInput={(params) => <TextField {...params} />}
                 />
-                <label>Название</label>
-                <TextInput 
+                </LocalizationProvider>
+
+                <div style={{position: 'relative', margin: '20px 0 20px', display: 'flex'}}>
+                    <InputLabel id="category_select">Категория</InputLabel>
+                    <Select
+                        required
+                        label='Категория'
+                        labelId='category_select'
+                        onChange={e => this.setState({category: e.target.value})}
+                        negative={this.state.category.length === 0}
+                        value={this.state.category}
+                        style={{flexGrow: 1}}
+                    >
+                        {
+                            this.props.categories.map((e, i) => <MenuItem value={e}>{e}</MenuItem>)
+                        }
+                    </Select>
+                </div>
+
+
+
+                <TextField 
+                    required
+                    id="outlined-basic"
+                    label="Название"
+                    variant="outlined"
                     onEnter={this.onEnter} 
                     onChange={e => {
                         this.setState({product: e.currentTarget.value});
                     }}
                     value={this.state.product}
-                ></TextInput>
-                <label>Сумма расхода</label>
+                />
+
+
+
                 <div
-                    style={{display: 'flex', flexDirection: 'row'}}
+                    style={{display: 'flex', flexDirection: 'row',  margin: '20px 0 20px', alignItems: 'baseline'}}
                 >
-                    <NumericInput 
-                        style={{width: '160px'}}
+                    <TextField
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        required
+                        id="sum_control"
+                        label="Сумма расхода"
+                        variant="outlined"
+                        onEnter={this.onEnter} 
                         onChange={e => {
                             let value = e.currentTarget.value;
                             value = value.replace(',', '.');
@@ -143,26 +181,35 @@ export default class LineForm extends React.Component {
                             const invalidStatusSum = isNaN(sum);
                             this.setState({invalidStatusSum, sum: value});
                         }}
-                        onEnter={this.onEnter}
                         negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
-                        defaultSelect
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
                 </div>
+
+
                 <Collapseable>
-                    <div
-                        className={'collapseable'}
+                <div style={{position: 'relative', margin: '20px 0 20px', display: 'flex'}}>
+                    <InputLabel id="category_for">Кому покупка</InputLabel>
+                    <Select
+                        variant='outlined'
+                        required
+                        label='Кому покупка'
+                        labelId='category_for'
+                        onChange={e => this.setState({whom: e.target.value})}
+                        negative={this.state.category.length === 0}
+                        value={this.state.whom}
+                        style={{flexGrow: 1}}
                     >
-                        <label>Кому покупка</label>
-                        <Select
-                            options={TARGET}
-                            onSelect={e => this.setState({whom: e})}
-                            value={this.state.whom}
-                        />
-                    </div>
-                </Collapseable>
-                <Collapseable>
+                        {
+                            TARGET.map(e => <MenuItem value={e}>{e}</MenuItem>)
+                        }
+                    </Select>
+                </div>
+
+
+
+                {/* <Collapseable>
                     <div
                         className={'collapseable'}
                     >
@@ -172,8 +219,22 @@ export default class LineForm extends React.Component {
                             value={this.state.note}
                         ></textarea>
                     </div>
+                </Collapseable> */}
+
+
+                <TextField 
+                    required
+                    id="outlined-basic"
+                    label="Примечание"
+                    variant="outlined"
+                    onEnter={this.onEnter} 
+                    onChange={e => this.setState({note: e.target.value})}
+                    value={this.state.note}
+                />
                 </Collapseable>
-            </div>
+
+            </FormControl>
+            </Box>
         );
     }
 }

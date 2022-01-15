@@ -31,7 +31,7 @@
 
 .controls-section {
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
     flex-wrap: wrap;
 }
 
@@ -43,7 +43,7 @@
 
 .filters-container {
     display: flex;
-    flex-direction: column;
+    margin: 10px;
 }
 
 .filter-section {

@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import defer from './defer';
 import './modal.css';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const classes = {
     modal: 'modal',
@@ -9,20 +11,21 @@ const classes = {
     buttons: 'buttons'
 }
 
-export let Buttons = (props) => {
+export const Buttons = (props) => {
     const b = props.buttonsList.map(element => 
-        <button
+        <Button
+            variant="contained"
+            color='primary'
             key={element.id}
             onClick={() => props.onClick(element.id)}
-            style={element.style}
         >
-            {element.faIcon ? <i className={element.faIcon} ></i> : element.name}
-        </button>
+            {element.name}
+        </Button>
     );
     return (
-        <div className={classes.buttons}>
-            {b}
-        </div>
+            <Stack spacing={2} direction="row">
+                {b}
+            </Stack>
     )
 };
 

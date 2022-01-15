@@ -1,13 +1,5 @@
 .addForm {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding: 2em; }
-  .addForm__item {
-    align-items: stretch; }
-  .addForm .collapseable {
-    display: flex;
-    flex-direction: column; }
+  background-color: white; }
 
 .addForm > label {
   padding-top: 10px; }

@@ -7,6 +7,7 @@ import { newPeriod, newFilter, updateLogin, fetchCategoriesAndApply } from '../s
 import { timePeriods, BUYERS } from '../define';
 import Summary from './summary';
 import { LoginPanel } from './login-panel';
+import Switch from '@mui/material/Switch';
 
 const classes = {
     content: 'content',
@@ -80,11 +81,11 @@ export const Content = (props, {store}) => {
                         )}
                     />
                 </div>
-                <i className='fa fa-bar-chart'
-                    aria-hidden='true'
-                    onClick={() => setShowBarChart(!showBarChart)}
-                    style={{color: showBarChart ? '#cccccc' : '#606060', margin: '.5em 1em', fontSize: '1.5em'}}
-                ></i>
+                <Switch
+                    checked={showBarChart}
+                    onChange={() => setShowBarChart(!showBarChart)}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                />
             </div>
             {showBarChart ? <Summary summary={store.getState().data.summary}/> : null}
             <ListViewContainer categories={store.getState().categories}/>

@@ -9,6 +9,8 @@ import {store, updateLogin, newRecord, setSummary, fetchCategories} from './stor
 import { LoginPanel } from './view/login-panel';
 import './view/top-container.css';
 import './font-awesome.css';
+import { ThemeProvider } from '@mui/material/styles';
+import { color_theme } from './color-theme';
 
 const classes = {
     topContainer: 'top-container',
@@ -39,17 +41,19 @@ export class Example extends React.PureComponent {
     }
     render() {
         return (
-            <div className={classes.topContainer}>
-            <LoginPanel
-                user={store.getState().user}
-                onLogin={user => {}}
-            />
-            <LoginPanel
-                user={''}
-                onLogin={user => {}}
-            />
-            <Content/>
-        </div>
+            <ThemeProvider theme={color_theme}>
+                <div className={classes.topContainer}>
+                <LoginPanel
+                    user={store.getState().user}
+                    onLogin={user => {}}
+                />
+                <LoginPanel
+                    user={''}
+                    onLogin={user => {}}
+                />
+                <Content/>
+                </div>
+            </ThemeProvider>
         )
     }
 }

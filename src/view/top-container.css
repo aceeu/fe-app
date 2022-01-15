@@ -40,8 +40,7 @@
 
 .filters-container {
   display: flex;
-  margin: 10px
-}
+  margin: 10px; }
 
 .filter-section {
   display: flex;

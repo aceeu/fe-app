@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import LineForm from './lineForm';
 import {Buttons} from './modal2';
+import { ThemeProvider } from '@mui/material/styles';
+import { color_theme } from '../color-theme';
 
-const addButtonsList = [{name: 'Add', id: 'Add', faIcon: 'fa fa-plus-square fa-2x',
+const addButtonsList = [{name: 'Добавить', id: 'Add', faIcon: 'fa fa-plus-square fa-2x',
     style: {margin: '0 10px', color: 'green'}},
-{name: 'Cancel', id: 'Cancel', faIcon: 'fa fa-ban fa-2x', style: {margin: '0 10px', color: 'red'}}];
+{name: 'Отменить', id: 'Cancel', faIcon: 'fa fa-ban fa-2x', style: {margin: '0 10px', color: 'red'}}];
 
 export default class AddForm extends React.PureComponent {
     data;
@@ -22,7 +24,7 @@ export default class AddForm extends React.PureComponent {
     render() {
         const props = this.props;
         return (
-            <React.Fragment>
+            <ThemeProvider theme={color_theme}>
                 <LineForm   
                     onData={this.onData}
                     user={props.user}
@@ -41,7 +43,7 @@ export default class AddForm extends React.PureComponent {
                     buttonsList={addButtonsList}
                     onClick={id => this.onClick(id)}
                 />
-            </React.Fragment>
+            </ThemeProvider>
         );    
     }
 }

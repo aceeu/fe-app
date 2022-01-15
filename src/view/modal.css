@@ -9,15 +9,12 @@
   justify-content: center; }
 
 .modal {
+  color: #252122;
   min-width: 200px;
   display: flex;
   flex-direction: column;
-  background: #99cc00;
   opacity: 1;
-  margin: 20px;
+  padding: 20px;
   font-weight: bolder;
-  align-items: center; }
-
-.buttons {
-  display: flex;
-  margin: 5px; }
+  align-items: center;
+  background-color: #fefaf9; }
