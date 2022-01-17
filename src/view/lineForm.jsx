@@ -15,10 +15,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Button from '@mui/material/Button';
 import {
-    NativeSelect, InputLabel, Box,
+    InputLabel, Box,
     Select, MenuItem, TextField 
 } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -81,8 +79,6 @@ export default class LineForm extends React.Component {
 
     onEnter = e => this.props.onEnter(e);
     
-    handleChange = e => this.setState({buyDate: e.target.value})
-    
     isCorrectData() {
         return !this.state.isInvalid
             && this.state.buyer.length !== 0
@@ -126,7 +122,8 @@ export default class LineForm extends React.Component {
                 <DatePicker
                     label="Дата"
                     value={this.state.buyDate}
-                    onChange={this.handleChange}
+                    onChange={e => this.setState({buyDate: e})}
+                    mask='__.__.____'
                     renderInput={(params) => <TextField {...params} />}
                 />
                 </LocalizationProvider>

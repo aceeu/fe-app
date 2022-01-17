@@ -22,8 +22,9 @@ export class Editform extends React.PureComponent {
     onClick = id => {
         if (id === 'Cancel')
             this.props.onClick();
-        if (id === 'Edit' && this.data)
+        if (id === 'Edit' && this.data) {
             this.props.onClick(this.data)
+        }
     }
 
     render() {
