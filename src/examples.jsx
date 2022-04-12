@@ -86,11 +86,12 @@ export function startExample() {
             {
                 creator: 'ace',
                 date: moment().format('YYYY-MM-DD'),
-                category: 'Продукты',
+                category: 'Одежда',
                 buyer: 'Аня',
                 product:'Хлеб',
                 sum: i,
-                note: 'Примечание бла бла бла'
+                note: 'Примечание бла бла бла',
+                id: i
             }));
     }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './list.css';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { Grid } from '../controls/grid';
 import LineForm from './lineForm';
 import { ShowModal } from './modal2';
 import { post } from '../communicate';
@@ -13,9 +12,10 @@ import { Buttons } from './modal2';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
 import { color_theme } from '../color-theme';
+import { DataGrid } from '@mui/x-data-grid';
 
-const editButtonsList = [{name: 'Изменить', id: 'Edit', faIcon: 'fa fa-pencil fa-2x', style: {margin: '0 10px', color: 'green'}},
-    {name: 'Отмена', id: 'Cancel', faIcon: 'fa fa-plus-square fa-2x', style: {margin: '0 10px', color: 'red'}}];
+const editButtonsList = [{ name: 'Изменить', id: 'Edit', faIcon: 'fa fa-pencil fa-2x', style: { margin: '0 10px', color: 'green' } },
+{ name: 'Отмена', id: 'Cancel', faIcon: 'fa fa-plus-square fa-2x', style: { margin: '0 10px', color: 'red' } }];
 
 export class Editform extends React.PureComponent {
     onData = data => this.data = data;
@@ -66,7 +66,7 @@ export class ListViewContainer extends React.Component {
         }
     }
     onEdit = async (line) => {
-        const {store} = this.context;
+        const { store } = this.context;
         // TODO: надо чтобы форма только изменяла существующие данные а не копировала туда потом обратно
         let data = await ShowModal({},
             <Editform
@@ -74,11 +74,11 @@ export class ListViewContainer extends React.Component {
                 categories={store.getState().categories}
                 user={store.getState().user}
             />
-            );
+        );
         if (data) {
             if (data.category === '') {
                 // remove data
-                const deldata = {_id: data._id};
+                const deldata = { _id: data._id };
                 const res = await post('/deldata', deldata);
                 if (res.res)
                     store.dispatch(deleteRecord(deldata._id));
@@ -90,16 +90,16 @@ export class ListViewContainer extends React.Component {
             const res = await post('/editdata', data);
             console.log(JSON.stringify(data));
             if (res.res)
-              store.dispatch(editedRecord(data));
+                store.dispatch(editedRecord(data));
             else
-              window.alert(res.text);
+                window.alert(res.text);
         }
     }
 
-    onButtonAdd = async() => {
-        const {store} = this.context;
-        let data = await ShowModal({purpose: true},
-            <AddForm 
+    onButtonAdd = async () => {
+        const { store } = this.context;
+        let data = await ShowModal({ purpose: true },
+            <AddForm
                 user={store.getState().user}
                 categories={store.getState().categories}
             />
@@ -113,20 +113,20 @@ export class ListViewContainer extends React.Component {
     }
 
     onSliderChange = (val) => {
-        this.setState({page: val}, () => console.log(val));
+        this.setState({ page: val }, () => console.log(val));
     }
 
     // page from zero
     getRecords = () => this.context.store.getState().data.records || [];
 
-    onRowsDisplayed = count => this.setState({countPerPage: count});
+    onRowsDisplayed = count => this.setState({ countPerPage: count });
 
     totalSum() {
         const summary = this.context.store.getState().data.summary;
         const keys = Object.keys(summary);
         return keys.reduce((a, k) => a + summary[k], 0)
     }
-    render () {
+    render() {
         const records = this.getRecords();
         const pages = Math.ceil(records.length / this.state.countPerPage);
         let navigatorValues = [];
@@ -135,11 +135,9 @@ export class ListViewContainer extends React.Component {
         return (
             <div className={'viewcontainer'}>
                 <div className={'viewcontainer--tools'}>
-                    {/* <i
-                        className={cn(this.props.className, 'fa fa-plus-circle', 'fa-button')}
-                        onClick={this.onButtonAdd}
-                    /> */}
-                    <Button variant="contained" onClick={this.onButtonAdd}>Добавить</Button>
+                    <Button variant="contained" onClick={this.onButtonAdd}>
+                        Добавить
+                    </Button>
                     <div>
                         Сумма: {this.totalSum()}
                     </div>
@@ -159,33 +157,66 @@ ListViewContainer.contextTypes = {
     store: PropTypes.object
 }
 
-const ListView = ({records, onEdit, start, totalRowsDisplayed}) => {
-    moment.locale('ru');
-    const gridProps = {
-        showColumns: ['buyer', 'date', 'category', 'product', 'sum', 'note'],
-        headers: {
-            // {label: '#', width: 20},
-            // {label: 'в/создания', width: 100},
-            // {label: 'в/изменения', width: 100},
-            date: {label: 'Дата', width: 20},
-            product: {label: 'Название', width: 20},
-            category: {label: 'Категория', width: 20},
-            // {label: 'Кто занес', width: 100},
-            buyer: {label: 'Покупатель', width: 15},
-            sum: {label: 'Сумма', width: 15},
-            note: {label: 'Примечание', width: 10}
+const ListView = ({ records, onEdit }) => {
+
+    const columns = [
+        {
+            field: 'buyer',
+            headerName: 'Покупатель',
+            width: 100,
+            editable: false,
         },
-        list: records.map((e, i) => {
-            return {
-                date: moment(e.buyDate).format('D MMMM YYYY'),
-                ...e
-            }
-        }),
-        onItemClick: (i) => onEdit(records[i])
-    }
+        {
+            field: 'date',
+            headerName: 'Дата',
+            width: 150,
+            editable: false,
+        },
+        {
+            field: 'category',
+            headerName: 'Категория',
+            type: 'number',
+            width: 150,
+            editable: false,
+        },
+        {
+            field: 'product',
+            headerName: 'Категория',
+            width: 170,
+            editable: false,
+        },
+        {
+            field: 'sum',
+            headerName: 'Сумма',
+            type: 'number',
+            width: 80,
+            editable: false,
+        },
+        {
+            field: 'note',
+            headerName: 'Примечание',
+            width: 120,
+            editable: false,
+        },
+    ]
+
+    const rows = records.map(e => ({
+        date: moment(e.buyDate).format('D MMMM YYYY'),
+        ...e
+    }))
+
     return (
-        <Grid
-            {...gridProps}
-        />
-    );
+        <div style={{ flexGrow: 1, width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                autoPageSize
+                rowsPerPageOptions={[10]}
+                disableSelectionOnClick
+                onCellClick={({row}) => {
+                    onEdit(row)
+                }}
+            />
+        </div>)
+
 }

@@ -55,6 +55,7 @@ const Collapseable = props => {
 export default class LineForm extends React.Component {
 
     constructor(props) {
+        console.log(props.category)
         super(props);
         this.state = {
             _id: props._id,
@@ -77,7 +78,7 @@ export default class LineForm extends React.Component {
         }
     }
 
-    onEnter = e => this.props.onEnter(e);
+    //onEnter = e => this.props.onEnter(e);
     
     isCorrectData() {
         return !this.state.isInvalid
@@ -135,12 +136,12 @@ export default class LineForm extends React.Component {
                         label='Категория'
                         labelId='category_select'
                         onChange={e => this.setState({category: e.target.value})}
-                        negative={this.state.category.length === 0}
+                        // negative={this.state.category.length === 0}
                         value={this.state.category}
                         style={{flexGrow: 1}}
                     >
                         {
-                            this.props.categories.map((e, i) => <MenuItem value={e}>{e}</MenuItem>)
+                            this.props.categories.map((e, i) => <MenuItem key={i} value={e}>{e}</MenuItem>)
                         }
                     </Select>
                 </div>
@@ -152,7 +153,7 @@ export default class LineForm extends React.Component {
                     id="outlined-basic"
                     label="Название"
                     variant="outlined"
-                    onEnter={this.onEnter} 
+                    // onEnter={this.onEnter} 
                     onChange={e => {
                         this.setState({product: e.currentTarget.value});
                     }}
@@ -170,7 +171,7 @@ export default class LineForm extends React.Component {
                         id="sum_control"
                         label="Сумма расхода"
                         variant="outlined"
-                        onEnter={this.onEnter} 
+                        //onEnter={this.onEnter} 
                         onChange={e => {
                             let value = e.currentTarget.value;
                             value = value.replace(',', '.');
@@ -178,7 +179,7 @@ export default class LineForm extends React.Component {
                             const invalidStatusSum = isNaN(sum);
                             this.setState({invalidStatusSum, sum: value});
                         }}
-                        negative={this.state.isInvalid || this.state.sum === 0}
+                        // negative={this.state.isInvalid || this.state.sum === 0}
                         value={this.state.sum}
                     />
                     <div style={{width: '74px', overflow: 'auto', paddingTop: '3px', paddingLeft: '3px'}}> {mathExpSum(this.state.sum)} </div>
@@ -194,12 +195,12 @@ export default class LineForm extends React.Component {
                         label='Кому покупка'
                         labelId='category_for'
                         onChange={e => this.setState({whom: e.target.value})}
-                        negative={this.state.category.length === 0}
+                        //negative={this.state.category.length === 0}
                         value={this.state.whom}
                         style={{flexGrow: 1}}
                     >
                         {
-                            TARGET.map(e => <MenuItem value={e}>{e}</MenuItem>)
+                            TARGET.map((e, i) => <MenuItem key={i} value={e}>{e}</MenuItem>)
                         }
                     </Select>
                 </div>
@@ -224,7 +225,7 @@ export default class LineForm extends React.Component {
                     id="outlined-basic"
                     label="Примечание"
                     variant="outlined"
-                    onEnter={this.onEnter} 
+                    //onEnter={this.onEnter} 
                     onChange={e => this.setState({note: e.target.value})}
                     value={this.state.note}
                 />

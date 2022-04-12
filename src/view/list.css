@@ -9,7 +9,8 @@
     align-items: center;
     max-width: 100%;
     flex-direction: row;
-    justify-content: space-between; }
+    justify-content: space-between;
+    padding: 10px; }
 
 .slider {
   width: initial; }

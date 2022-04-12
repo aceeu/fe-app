@@ -9,6 +9,11 @@ if (process.env.NODE_ENV === 'production') {
     ReactDOM.render(<App />, document.getElementById('root'));
     registerServiceWorker();
 } else {
-    startExample();
-    ReactDOM.render(<Example />, document.getElementById('root'));
+    startExample()
+    ReactDOM.render(<Example />, document.getElementById('root'))
+
+    setTimeout(() => {
+        const element = document.querySelector('body>iframe')
+        element.parentElement.removeChild(element)
+    }, 1000)
 }

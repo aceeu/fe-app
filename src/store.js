@@ -39,11 +39,11 @@ const newRecordTemplate = {
     note: '%note'
 }
 
-export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom, note, _id}) => {
+export const newRecord = ({creator, buyDate, category, buyer, product, sum, whom, note, id}) => {
     return {
         type: actions_constants.ADD_RECORD,
         ...newRecordTemplate,
-        _id,
+        id,
         creator,
         category,
         buyDate,
