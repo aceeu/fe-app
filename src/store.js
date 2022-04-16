@@ -205,7 +205,8 @@ export const store = applyMiddleware(stateModifyDetector)(createStore)(
 //   }
 // }
 
-function getFromToDates(period) {
+function getFromToDates(period_) {
+    const period = +period_
     const res = {fromDate: null, toDate: moment().toDate()}
     switch (period) {
         case Period.lastWeek:
@@ -231,10 +232,11 @@ function getFromToDates(period) {
     return res    
 }
 
-async function fetchData (state) {
-    const filter = state.getState().filter;
-
-    const data = await post('/data', {...getFromToDates, filter});
+async function fetchData (store) {
+    const filter = store.getState().filter;
+    const period = store.getState().period;
+    const dates = getFromToDates(+period)
+    const data = await post('/data', {...dates, filter});
     if (data.res !== false) {
       store.dispatch({
         type: actions_constants.FETCH_RECORDS,

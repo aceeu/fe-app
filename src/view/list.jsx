@@ -176,13 +176,13 @@ const ListView = ({ records, onEdit }) => {
             field: 'category',
             headerName: 'Категория',
             type: 'number',
-            width: 150,
+            width: 200,
             editable: false,
         },
         {
             field: 'product',
-            headerName: 'Категория',
-            width: 170,
+            headerName: 'Название',
+            width: 200,
             editable: false,
         },
         {
@@ -202,8 +202,9 @@ const ListView = ({ records, onEdit }) => {
 
     const rows = records.map(e => ({
         date: moment(e.buyDate).format('D MMMM YYYY'),
-        ...e
-    }))
+        ...e,
+        id: e._id
+    })).sort((a, b) => moment(b.buyDate) - moment(a.buyDate))
 
     return (
         <div style={{ flexGrow: 1, width: '100%' }}>

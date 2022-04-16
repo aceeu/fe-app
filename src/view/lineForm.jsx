@@ -55,7 +55,7 @@ const Collapseable = props => {
 export default class LineForm extends React.Component {
 
     constructor(props) {
-        console.log(props.category)
+        //console.log(props.category)
         super(props);
         this.state = {
             _id: props._id,
