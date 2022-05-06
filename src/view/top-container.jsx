@@ -55,9 +55,6 @@ export const Content = (props, {store}) => {
     const categoryFilter = filter.category ? filter.category : '';
     const buyers = [{name: 'Все', value: '*'}, ...BUYERS.map(value => ({ name : value, value}))];
     const categoriesList = [{name: 'Все', value: '*'}, ...store.getState().categories.map(c => ({name: c, value: c}))]
-console.log(timePeriods)
-console.log(buyers)
-console.log(buyerFilter)
     return (
         <div className={classes.content}>
             <div className={classes.controlsSection}>

@@ -108,7 +108,7 @@ export class ListViewContainer extends React.Component {
             // send data to the server
             const res = await post('/adddata', data);
             if (res.res)
-                store.dispatch(newRecord(res.row)); // сервер вернет строку с _id
+                store.dispatch(newRecord({...res.row, id: res.row._id})); // сервер вернет строку с _id
         }
     }
 
@@ -163,26 +163,26 @@ const ListView = ({ records, onEdit }) => {
         {
             field: 'buyer',
             headerName: 'Покупатель',
-            width: 100,
+            width: 30,
             editable: false,
         },
         {
             field: 'date',
             headerName: 'Дата',
-            width: 150,
+            width: 80,
             editable: false,
         },
         {
             field: 'category',
             headerName: 'Категория',
             type: 'number',
-            width: 200,
+            flex: 1,
             editable: false,
         },
         {
             field: 'product',
             headerName: 'Название',
-            width: 200,
+            flex: 1,
             editable: false,
         },
         {
@@ -192,16 +192,16 @@ const ListView = ({ records, onEdit }) => {
             width: 80,
             editable: false,
         },
-        {
-            field: 'note',
-            headerName: 'Примечание',
-            width: 120,
-            editable: false,
-        },
+        // {
+        //     field: 'note',
+        //     headerName: 'Примечание',
+        //     width: 120,
+        //     editable: false,
+        // },
     ]
 
     const rows = records.map(e => ({
-        date: moment(e.buyDate).format('D MMMM YYYY'),
+        date: moment(e.buyDate).format('D MM YY'),
         ...e,
         id: e._id
     })).sort((a, b) => moment(b.buyDate) - moment(a.buyDate))
